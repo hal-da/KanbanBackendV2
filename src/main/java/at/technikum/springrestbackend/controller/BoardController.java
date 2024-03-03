@@ -2,9 +2,10 @@ package at.technikum.springrestbackend.controller;
 
 
 import at.technikum.springrestbackend.dto.BoardDto;
+import at.technikum.springrestbackend.dto.PublicBoardDto;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.mapper.BoardMapper;
-import at.technikum.springrestbackend.model.Board;
+import at.technikum.springrestbackend.mapper.PublicBoardMapper;
 import at.technikum.springrestbackend.service.BoardService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,15 +20,21 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardMapper boardMapper;
 
-    public BoardController(BoardService boardService, BoardMapper boardMapper) {
+    private final PublicBoardMapper publicBoardMapper;
+
+    public BoardController(
+            BoardService boardService,
+            BoardMapper boardMapper,
+            PublicBoardMapper publicBoardMapper) {
         this.boardService = boardService;
         this.boardMapper = boardMapper;
+        this.publicBoardMapper = publicBoardMapper;
     }
 
 
     @GetMapping
-    public List<Board> getBoards(){
-        return boardService.findAll();
+    public List<PublicBoardDto> getBoards(){
+        return publicBoardMapper.toPublicBoardDtos(boardService.findAll());
     }
 
     @PostMapping
