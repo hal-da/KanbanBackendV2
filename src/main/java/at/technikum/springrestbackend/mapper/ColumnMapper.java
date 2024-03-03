@@ -18,10 +18,11 @@ public class ColumnMapper {
 
     }
 
-    public ColumnDto toDto(Column columnEntity) {
+    public ColumnDto toDto(Column column) {
         return new ColumnDto(
-                columnEntity.getId(),
-                columnEntity.getTitle()
+                column.getId(),
+                column.getTitle(),
+                column.getBoard().getId()
         );
     }
 

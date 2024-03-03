@@ -24,7 +24,7 @@ public class BoardService {
         // new and empty board
         if (board.getId() == null) {
             board = new Board(board.getTitle());
-            board.setColumns(columnService.createStandardColumns());
+            board.setColumns(columnService.createStandardColumns(board));
             // TODO: remove this test user
             UserEntity testUser = new UserEntity(
                     "testName",
@@ -32,19 +32,16 @@ public class BoardService {
                     "testEmail");
             board.addAdmin(testUser);
             board.addMember(testUser);
-//            testUser.addAdminBoard(board);
-//            testUser.addMemberBoard(board);
         }
         boardRepository.save(board);
         return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);
-
     }
 
     public Board findById(String id){
         return boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public void deleteById(String id){
+    public void delete(String id){
         boardRepository.deleteById(id);
     }
 

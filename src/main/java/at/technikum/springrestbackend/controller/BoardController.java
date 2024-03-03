@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("board")
+@RequestMapping("boards")
 public class BoardController {
 
     private final BoardService boardService;
@@ -52,5 +52,11 @@ public class BoardController {
     @PutMapping
     public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto) {
         return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto)));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBoard(@PathVariable String id) {
+        boardService.delete(id);
     }
 }

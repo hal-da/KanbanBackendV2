@@ -14,7 +14,7 @@ public class Board {
 
     private String title;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
     private List<Column> columns;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -105,6 +105,12 @@ public class Board {
 
     public void addColumn(Column column) {
         this.columns.add(column);
+    }
+
+    public Column addColumn(String title) {
+        Column column = new Column(title, this);
+        this.columns.add(column);
+        return column;
     }
 
     public void addMember(UserEntity user) {
