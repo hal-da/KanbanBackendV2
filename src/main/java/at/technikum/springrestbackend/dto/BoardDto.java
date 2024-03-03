@@ -6,17 +6,25 @@ import java.util.List;
 
 public class BoardDto {
     private String id;
-
     @NotBlank
     private String title;
-
     private List<ColumnDto> columns;
 
+    private List<PublicUserDto> members;
+    private List<PublicUserDto> admins;
 
-    public BoardDto(String id, String title, List<ColumnDto> columns) {
+
+    public BoardDto(
+            String id,
+            String title,
+            List<ColumnDto> columns,
+            List<PublicUserDto> members,
+            List<PublicUserDto> admins) {
         this.id = id;
         this.title = title;
         this.columns = columns;
+        this.members = members;
+        this.admins = admins;
     }
 
     public BoardDto() {
@@ -44,5 +52,29 @@ public class BoardDto {
 
     public void setColumns(List<ColumnDto> columns) {
         this.columns = columns;
+    }
+
+    public void addColumn(ColumnDto column) {
+        this.columns.add(column);
+    }
+
+    public void removeColumn(ColumnDto column) {
+        this.columns.remove(column);
+    }
+
+    public List<PublicUserDto> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<PublicUserDto> members) {
+        this.members = members;
+    }
+
+    public List<PublicUserDto> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(List<PublicUserDto> admins) {
+        this.admins = admins;
     }
 }

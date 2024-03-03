@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin
-@RestController("/boards")
+@RestController
+@RequestMapping("board")
 public class BoardController {
 
     private final BoardService boardService;
     private final BoardMapper boardMapper;
-
     private final PublicBoardMapper publicBoardMapper;
 
     public BoardController(
@@ -44,8 +44,13 @@ public class BoardController {
         return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto)));
     }
 
-    @GetMapping("/{boardId}")
-    public BoardDto getBoard(@PathVariable String boardId) throws EntityNotFoundException {
-        return boardMapper.toDto(boardService.findById(boardId));
+    @GetMapping("/{id}")
+    public BoardDto getBoard(@PathVariable String id) throws EntityNotFoundException {
+        return boardMapper.toDto(boardService.findById(id));
+    }
+
+    @PutMapping
+    public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto) {
+        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto)));
     }
 }

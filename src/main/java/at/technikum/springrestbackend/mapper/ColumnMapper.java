@@ -10,7 +10,7 @@ import java.util.List;
 public class ColumnMapper {
 
 
-    public Column mapToColumn(ColumnDto columnDto) {
+    public Column toColumn(ColumnDto columnDto) {
         return new Column(
                 columnDto.getId(),
                 columnDto.getTitle()
@@ -35,7 +35,7 @@ public class ColumnMapper {
     public List<Column> mapToColumns(List<ColumnDto> columnDtos) {
         return columnDtos
                 .stream()
-                .map(this::mapToColumn)
+                .map(this::toColumn)
                 .toList();
     }
 
