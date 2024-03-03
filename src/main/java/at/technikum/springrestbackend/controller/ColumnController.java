@@ -6,6 +6,7 @@ import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.mapper.ColumnMapper;
 import at.technikum.springrestbackend.service.ColumnService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -29,5 +30,11 @@ public class ColumnController {
     @PutMapping
     public ColumnDto updateColumn(@RequestBody @Valid ColumnDto columnDto) {
         return columnMapper.toDto(columnService.updateColumn(columnMapper.toColumn(columnDto)));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteColumn(@PathVariable String id) {
+        columnService.deleteColumn(id);
     }
 }
