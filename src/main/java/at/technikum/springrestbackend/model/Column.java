@@ -1,9 +1,6 @@
 package at.technikum.springrestbackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Column {
@@ -13,6 +10,10 @@ public class Column {
     private String id;
 
     private String title;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
 
 
     public Column() {
@@ -25,6 +26,8 @@ public class Column {
 
     public Column(String title) {
         this.title = title;
+
+
     }
 
     public String getId() {
@@ -43,5 +46,12 @@ public class Column {
         this.title = title;
     }
 
-
+    @Override
+    public String toString() {
+        return "Column{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", board=" + board +
+                '}';
+    }
 }
