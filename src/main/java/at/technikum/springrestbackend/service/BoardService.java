@@ -25,7 +25,7 @@ public class BoardService {
     }
 
     public Board findById(String id){
-        return boardRepository.findById(id).orElse(null);
+        return boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public void deleteById(String id){

@@ -32,7 +32,13 @@ public class BoardController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardDto createBoard(@RequestBody @Valid BoardDto boardDto) throws EntityNotFoundException {
+    public BoardDto createBoard(@RequestBody @Valid BoardDto boardDto)
+            throws EntityNotFoundException {
         return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto)));
+    }
+
+    @GetMapping("/{boardId}")
+    public BoardDto getBoard(@PathVariable String boardId) throws EntityNotFoundException {
+        return boardMapper.toDto(boardService.findById(boardId));
     }
 }
