@@ -27,6 +27,7 @@ public class ColumnController {
         return columnMapper.toDto(columnService.getColumnById(id));
     }
 
+
     @PutMapping
     public ColumnDto updateColumn(@RequestBody @Valid ColumnDto columnDto) {
         return columnMapper.toDto(columnService.updateColumn(columnMapper.toColumn(columnDto)));
@@ -37,4 +38,10 @@ public class ColumnController {
     public void deleteColumn(@PathVariable String id) {
         columnService.deleteColumn(id);
     }
+
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ColumnDto createColumn(@RequestBody @Valid ColumnDto columnDto) {
+//        return columnMapper.toDto(columnService.saveColumn(columnMapper.toColumn(columnDto)));
+//    }
 }

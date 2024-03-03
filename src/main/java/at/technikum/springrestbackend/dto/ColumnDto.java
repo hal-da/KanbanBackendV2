@@ -9,9 +9,17 @@ public class ColumnDto {
     @NotBlank
     private String title;
 
+    private String boardId;
+
     public ColumnDto(String id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public ColumnDto(String id, String title, String boardId) {
+        this.id = id;
+        this.title = title;
+        this.boardId = boardId;
     }
 
     public ColumnDto() {
@@ -31,5 +39,13 @@ public class ColumnDto {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(String boardId) {
+        this.boardId = boardId;
     }
 }

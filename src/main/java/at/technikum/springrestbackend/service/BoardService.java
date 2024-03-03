@@ -24,7 +24,7 @@ public class BoardService {
         // new and empty board
         if (board.getId() == null) {
             board = new Board(board.getTitle());
-            board.setColumns(columnService.createStandardColumns());
+            board.setColumns(columnService.createStandardColumns(board));
             // TODO: remove this test user
             UserEntity testUser = new UserEntity(
                     "testName",

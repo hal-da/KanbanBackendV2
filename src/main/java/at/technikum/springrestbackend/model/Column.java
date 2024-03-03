@@ -19,15 +19,24 @@ public class Column {
     public Column() {
     }
 
+    public Column(String title) {
+        this.title = title;
+    }
+
     public Column(String id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public Column(String title) {
+    public Column(String title, Board board) {
         this.title = title;
+        this.board = board;
+    }
 
-
+    public Column(String id, String title, Board board) {
+        this.id = id;
+        this.title = title;
+        this.board = board;
     }
 
     public String getId() {
@@ -44,6 +53,14 @@ public class Column {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @Override
