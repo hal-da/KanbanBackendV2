@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class ColumnEntity {
+public class Column {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -15,15 +15,15 @@ public class ColumnEntity {
     private String title;
 
 
-    public ColumnEntity() {
+    public Column() {
     }
 
-    public ColumnEntity(String id, String title) {
+    public Column(String id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public ColumnEntity(String title) {
+    public Column(String title) {
         this.title = title;
     }
 
