@@ -9,6 +9,7 @@ public class ColumnDto {
     @NotBlank
     private String title;
 
+    @NotBlank
     private String boardId;
 
     public ColumnDto(String id, String title) {

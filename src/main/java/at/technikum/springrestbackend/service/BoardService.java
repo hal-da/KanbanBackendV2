@@ -32,12 +32,9 @@ public class BoardService {
                     "testEmail");
             board.addAdmin(testUser);
             board.addMember(testUser);
-//            testUser.addAdminBoard(board);
-//            testUser.addMemberBoard(board);
         }
         boardRepository.save(board);
         return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);
-
     }
 
     public Board findById(String id){
