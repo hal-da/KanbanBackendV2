@@ -1,7 +1,7 @@
 package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ColumnDto;
-import at.technikum.springrestbackend.model.ColumnEntity;
+import at.technikum.springrestbackend.model.Column;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,29 +10,29 @@ import java.util.List;
 public class ColumnMapper {
 
 
-    public ColumnEntity mapToColumn(ColumnDto columnDto) {
-        return new ColumnEntity(
+    public Column mapToColumn(ColumnDto columnDto) {
+        return new Column(
                 columnDto.getId(),
                 columnDto.getTitle()
         );
 
     }
 
-    public ColumnDto toDto(ColumnEntity columnEntity) {
+    public ColumnDto toDto(Column columnEntity) {
         return new ColumnDto(
                 columnEntity.getId(),
                 columnEntity.getTitle()
         );
     }
 
-    public List<ColumnDto> toDtos(List<ColumnEntity> columnEntities) {
+    public List<ColumnDto> toDtos(List<Column> columnEntities) {
         return columnEntities
                 .stream()
                 .map(this::toDto)
                 .toList();
     }
 
-    public List<ColumnEntity> mapToColumns(List<ColumnDto> columnDtos) {
+    public List<Column> mapToColumns(List<ColumnDto> columnDtos) {
         return columnDtos
                 .stream()
                 .map(this::mapToColumn)

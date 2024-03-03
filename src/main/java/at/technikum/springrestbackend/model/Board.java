@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class BoardEntity {
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -14,21 +14,21 @@ public class BoardEntity {
 
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ColumnEntity> columnEntities;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Column> columnEntities;
 
 
-    public BoardEntity() {
+    public Board() {
     }
-    public BoardEntity(String id, String title, List<ColumnEntity> columnEntities) {
+    public Board(String id, String title, List<Column> columnEntities) {
         this.id = id;
         this.title = title;
         this.columnEntities = columnEntities;
     }
 
-    public BoardEntity(String title) {
+    public Board(String title) {
         this.title = title;
-        ColumnEntity column = new ColumnEntity("Backlog");
+        Column column = new Column("Backlog");
         this.columnEntities = new ArrayList<>();
         this.columnEntities.add(column);
     }
@@ -49,11 +49,11 @@ public class BoardEntity {
         this.title = title;
     }
 
-    public List<ColumnEntity> getColumns() {
+    public List<Column> getColumns() {
         return columnEntities;
     }
 
-    public void setColumns(List<ColumnEntity> columnEntities) {
+    public void setColumns(List<Column> columnEntities) {
         this.columnEntities = columnEntities;
     }
 }
