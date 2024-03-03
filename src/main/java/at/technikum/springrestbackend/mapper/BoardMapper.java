@@ -2,8 +2,8 @@ package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.BoardDto;
 import at.technikum.springrestbackend.dto.ColumnDto;
-import at.technikum.springrestbackend.model.BoardEntity;
-import at.technikum.springrestbackend.model.ColumnEntity;
+import at.technikum.springrestbackend.model.Board;
+import at.technikum.springrestbackend.model.Column;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,16 +17,16 @@ public class BoardMapper {
         this.columnMapper = columnMapper;
     }
 
-    public BoardEntity mapToBoard(BoardDto boardDto) {
+    public Board toBoard(BoardDto boardDto) {
 
         if(boardDto.getId() == null) {
-            return new BoardEntity(boardDto.getTitle());
+            return new Board(boardDto.getTitle());
         }
 
-        List<ColumnEntity> columnEntityDtos = columnMapper.mapToColumns(boardDto.getColumns());
+        List<Column> columnEntityDtos = columnMapper.mapToColumns(boardDto.getColumns());
 
 
-        return new BoardEntity(
+        return new Board(
                 boardDto.getId(),
                 boardDto.getTitle(),
                 columnEntityDtos
@@ -34,7 +34,7 @@ public class BoardMapper {
 
     }
 
-    public BoardDto toDto(BoardEntity board) {
+    public BoardDto toDto(Board board) {
 
         List<ColumnDto> columnDtos = columnMapper.toDtos(board.getColumns());
 
