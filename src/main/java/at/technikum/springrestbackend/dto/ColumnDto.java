@@ -1,9 +1,12 @@
 package at.technikum.springrestbackend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ColumnDto {
 
     private String id;
 
+    @NotBlank
     private String title;
 
     public ColumnDto(String id, String title) {
