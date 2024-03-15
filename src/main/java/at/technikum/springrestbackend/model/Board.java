@@ -108,7 +108,7 @@ public class Board {
     }
 
     public Column addColumn(String title) {
-        Column column = new Column(title, this);
+        Column column = new Column(title, this, this.columns.size() + 1);
         this.columns.add(column);
         return column;
     }

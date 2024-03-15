@@ -9,6 +9,8 @@ public class Column {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    private int order;
+
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,24 +21,42 @@ public class Column {
     public Column() {
     }
 
+    public Column(Column column) {
+        this.id = column.getId();
+        this.title = column.getTitle();
+        this.board = column.getBoard();
+        this.order = column.getOrder();
+    }
+
     public Column(String title) {
         this.title = title;
     }
 
-    public Column(String id, String title) {
+    public Column(String id, String title, int order) {
         this.id = id;
         this.title = title;
+        this.order = order;
     }
 
-    public Column(String title, Board board) {
+    public Column(String title, Board board, int order) {
         this.title = title;
         this.board = board;
+        this.order = order;
     }
 
-    public Column(String id, String title, Board board) {
+    public Column(String id, String title, Board board, int order) {
         this.id = id;
         this.title = title;
         this.board = board;
+        this.order = order;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getId() {

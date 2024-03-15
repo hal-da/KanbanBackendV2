@@ -5,25 +5,25 @@ import jakarta.validation.constraints.NotBlank;
 public class ColumnDto {
 
     private String id;
-
     @NotBlank
     private String title;
+    private int order;
 
-    @NotBlank
-    private String boardId;
-
-    public ColumnDto(String id, String title) {
+    public ColumnDto(String id, String title, int order) {
         this.id = id;
         this.title = title;
-    }
-
-    public ColumnDto(String id, String title, String boardId) {
-        this.id = id;
-        this.title = title;
-        this.boardId = boardId;
+        this.order = order;
     }
 
     public ColumnDto() {
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getId() {
@@ -42,11 +42,12 @@ public class ColumnDto {
         this.title = title;
     }
 
-    public String getBoardId() {
-        return boardId;
-    }
-
-    public void setBoardId(String boardId) {
-        this.boardId = boardId;
+    @Override
+    public String toString() {
+        return "ColumnDto{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", order=" + order +
+                '}';
     }
 }
