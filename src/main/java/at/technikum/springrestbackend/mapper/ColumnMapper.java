@@ -13,16 +13,16 @@ public class ColumnMapper {
     public Column toColumn(ColumnDto columnDto) {
         return new Column(
                 columnDto.getId(),
-                columnDto.getTitle()
+                columnDto.getTitle(),
+                columnDto.getOrder()
         );
-
     }
 
     public ColumnDto toDto(Column column) {
         return new ColumnDto(
                 column.getId(),
                 column.getTitle(),
-                column.getBoard().getId()
+                column.getOrder()
         );
     }
 

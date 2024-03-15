@@ -12,14 +12,17 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
-@RequestMapping("columns")
+@RequestMapping("boards/{boardId}/columns")
 public class ColumnController {
 
     private final ColumnService columnService;
     private final ColumnMapper columnMapper;
     private final BoardService boardService;
+
     public ColumnController(
             ColumnService columnService,
             ColumnMapper columnMapper,
@@ -29,10 +32,21 @@ public class ColumnController {
         this.boardService = boardService;
     }
 
+    @GetMapping
+    public List<ColumnDto> getColumns(@PathVariable String boardId) {
+        List<ColumnDto> columnDtos = columnMapper
+                .toDtos(columnService.getColumnsByBoardId(boardId));
+        System.out.println(columnDtos);
+        return columnDtos;
+    }
 
-    @GetMapping("/{id}")
-    public ColumnDto getColumn(@PathVariable String id)throws EntityNotFoundException {
-        return columnMapper.toDto(columnService.getColumnById(id));
+
+    @GetMapping("/{columnId}")
+    public ColumnDto getColumn(
+            @PathVariable String columnId,
+            @PathVariable String boardId)
+            throws EntityNotFoundException {
+        return columnMapper.toDto(columnService.getColumnById(columnId));
     }
 
 
@@ -41,16 +55,17 @@ public class ColumnController {
         return columnMapper.toDto(columnService.updateColumn(columnDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{columnId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteColumn(@PathVariable String id) {
-        columnService.deleteColumn(id);
+    public void deleteColumn(@PathVariable String columnId, @PathVariable String boardId) {
+        columnService.deleteColumn(columnId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ColumnDto createColumn(@RequestBody @Valid ColumnDto columnDto) {
-        Board board = boardService.findById(columnDto.getBoardId());
+    public ColumnDto createColumn(@PathVariable String boardId,
+                                  @RequestBody @Valid ColumnDto columnDto) {
+        Board board = boardService.findById(boardId);
         Column column = board.addColumn(columnDto.getTitle());
         boardService.save(board);
         return columnMapper.toDto(columnService.getColumnById(column.getId()));
