@@ -28,7 +28,7 @@ jobs:
 
     - name: Create directory on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com 'sudo mkdir -p /home/kanbanBE/app'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com 'sudo mkdir -p /home/kanbanBE/app && sudo chown -R ubuntu:ubuntu /home/kanbanBE/app'
 
     - name: Copy files via scp
       run: |
