@@ -37,7 +37,7 @@ jobs:
     - name: SSH and deploy
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
-          cd /home/ec2-user/app
+          cd /home/kanbanBE/app
           docker compose down
           docker compose up --build
         EOF
