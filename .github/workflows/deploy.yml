@@ -28,7 +28,8 @@ jobs:
 
     - name: Copy files via SSH
       run: |
-        scp -r -o StrictHostKeyChecking=no . ubuntu@${{ secrets.EC2_HOST }}:/home/ec2-user/app
+        scp -r -o StrictHostKeyChecking=no * ubuntu@${{ secrets.EC2_HOST }}:/home/ec2-user/app
+
 
     - name: Deploy with Docker Compose
       run: |
