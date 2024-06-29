@@ -37,9 +37,19 @@ jobs:
     - name: SSH and deploy
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
+          set -e
           cd /home/kanbanBE/app
-          sudo docker compose down
-          sudo docker compose up --build
+          echo "Stopping existing Docker containers..."
+          docker-compose down
+          echo "Starting Docker containers..."
+          docker-compose up -d --build
+          echo "Waiting for MariaDB to be ready..."
+          while ! docker exec app-db-1 mariadb -u root -e "SELECT 1"; do
+            echo "MariaDB is not ready yet, waiting..."
+            sleep 5
+          done
+          echo "MariaDB is ready for connections."
+        EOF
         EOF
 
 
