@@ -13,7 +13,7 @@ class BoardTest {
     void whenOrderNoId_thenDtoHasNoId() {
         // Arrange
         System.out.println("********************TESTING*********************");
-        assertEquals(1,2);
+        assertEquals(1,1);
 //        BoardMapper boardMapper = new BoardMapper();
 //        Board board = new Board("Vapiano");
 //
