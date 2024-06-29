@@ -7,10 +7,16 @@ on:
     branches: [ "master" ]
 
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Debug secrets
+      run: |
+        echo "EC2_HOST=${{ secrets.AWS_HOST }}"
+        echo "EC2_SSH_KEY=${{ secrets.EC2_SSH_KEY }}" | tr -d '\n' | echo
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
