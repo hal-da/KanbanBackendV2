@@ -28,6 +28,7 @@ jobs:
 
     - name: Copy files via SSH
       run: |
+        sudo mkdir ibims
         sudo scp -r -o StrictHostKeyChecking=no * ubuntu@${{ secrets.EC2_HOST }}:/home/ec2-user/app
 
 
