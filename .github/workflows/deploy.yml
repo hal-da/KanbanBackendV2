@@ -44,7 +44,7 @@ jobs:
           echo "Starting Docker containers..."
           sudo docker-compose up -d --build
           echo "Waiting for MariaDB to be ready..."
-          while ! docker exec app-db-1 mariadb -u root -e "SELECT 1"; do
+          while ! sudo docker exec app-db-1 mariadb -u root -e "SELECT 1"; do
             echo "MariaDB is not ready yet, waiting..."
             sleep 5
           done
