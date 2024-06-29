@@ -21,6 +21,6 @@ jobs:
         host: ${{ secrets.AWS_HOST}}
         username: ec2-user
         key: ${{ secrets.AWS_SSH }}
-        run: 
+        script: |          
           docker compose down
           docker compose up
