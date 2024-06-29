@@ -7,14 +7,6 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker compose build 
 
   deploy:
     runs-on: ubuntu-latest
@@ -28,6 +20,9 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: docker compose build 
 
     - name: Set up SSH agent
       uses: webfactory/ssh-agent@v0.9.0
@@ -43,14 +38,9 @@ jobs:
         scp -o StrictHostKeyChecking=no -r * ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com:/home/kanbanBE/app
 
     - name: SSH and deploy
-      run: |
-        ssh -f -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
-          cd /home/kanbanBE/app
-          echo "Stopping existing Docker containers..."
-          sudo docker compose down
-          echo "Starting Docker containers..."
-          sudo docker compose up --build
-        EOF &
+      run: ssh -f -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com \
+       'cd /home/kanbanBE/app && sudo docker compose down && sudo docker compose up --build'
+
 
 
 
