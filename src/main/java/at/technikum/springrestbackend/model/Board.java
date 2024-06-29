@@ -3,14 +3,15 @@ package at.technikum.springrestbackend.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Board {
+public class Board extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    private String id;
 
     private String title;
 
@@ -41,33 +42,24 @@ public class Board {
             String title,
             List<Column> columns,
             List<UserEntity> members,
-            List<UserEntity> admins) {
+            List<UserEntity> admins,
+            Date createdAt,
+            Date lastChangeAt) {
         this.id = id;
         this.title = title;
         this.columns = columns;
         this.members = members;
         this.admins = admins;
+        this.createdAt = createdAt;
+        this.lastChangeAt = lastChangeAt;
     }
 
     public Board(String title) {
+        super();
         this.title = title;
         this.columns = new ArrayList<>();
         this.members = new ArrayList<>();
         this.admins = new ArrayList<>();
-//        UserEntity admin = new UserEntity("admin", "admin", "");
-//        this.admins.add(admin);
-//        UserEntity member = new UserEntity("member", "member", "");
-//        this.members.add(member);
-//        admin.addAdminBoard(this);
-//        member.addMemberBoard(this);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -108,7 +100,7 @@ public class Board {
     }
 
     public Column addColumn(String title) {
-        Column column = new Column(title, this, this.columns.size() + 1);
+        Column column = new Column(title, this, this.columns.getLast().getOrder() + 1);
         this.columns.add(column);
         return column;
     }
@@ -136,7 +128,7 @@ public class Board {
     @Override
     public String toString() {
         return "Board{" +
-                "id='" + id + '\'' +
+                "id='" + this.getId() + '\'' +
                 ", title='" + title + '\'' +
                 ", columns=" + columns +
                 ", members=" + members +

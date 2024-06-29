@@ -42,7 +42,9 @@ public class BoardMapper {
                 boardDto.getTitle(),
                 columnDtos,
                 members,
-                admins
+                admins,
+                boardDto.getCreatedAt(),
+                boardDto.getLastChangeAt()
         );
 
     }
@@ -58,7 +60,9 @@ public class BoardMapper {
                 board.getTitle(),
                 columnDtos,
                 members,
-                admins
+                admins,
+                board.getCreatedAt(),
+                board.getLastChangeAt()
         );
     }
 }

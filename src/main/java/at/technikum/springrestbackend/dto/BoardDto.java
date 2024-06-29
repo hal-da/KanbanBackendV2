@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Date;
 import java.util.List;
 
 public class BoardDto {
@@ -12,6 +13,9 @@ public class BoardDto {
 
     private List<PublicUserDto> members;
     private List<PublicUserDto> admins;
+    
+    private Date createdAt;
+    private Date lastChangeAt;
 
 
     public BoardDto(
@@ -19,12 +23,16 @@ public class BoardDto {
             String title,
             List<ColumnDto> columns,
             List<PublicUserDto> members,
-            List<PublicUserDto> admins) {
+            List<PublicUserDto> admins,
+            Date createdAt,
+            Date lastChangeAt) {
         this.id = id;
         this.title = title;
         this.columns = columns;
         this.members = members;
         this.admins = admins;
+        this.createdAt = createdAt;
+        this.lastChangeAt = lastChangeAt;
     }
 
     public BoardDto() {
@@ -76,5 +84,21 @@ public class BoardDto {
 
     public void setAdmins(List<PublicUserDto> admins) {
         this.admins = admins;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getLastChangeAt() {
+        return lastChangeAt;
+    }
+
+    public void setLastChangeAt(Date lastChangeAt) {
+        this.lastChangeAt = lastChangeAt;
     }
 }
