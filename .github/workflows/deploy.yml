@@ -44,7 +44,7 @@ jobs:
           echo "Starting Docker containers..."
           sudo sudo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} docker compose up -d --build
           echo "Waiting for MariaDB to be ready..."
-          while ! sudo docker exec app-db-1 mariadb -u root -e "SELECT 1"; do
+          while ! sudo docker exec app-db mysqladmin ping -h "127.0.0.1" -u root -p"${{ secrets.MYSQL_ROOT_PASSWORD }}" --silent; do
             echo "MariaDB is not ready yet, waiting..."
             sleep 5
           done
