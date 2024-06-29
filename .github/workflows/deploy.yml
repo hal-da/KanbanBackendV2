@@ -43,9 +43,12 @@ jobs:
           echo "Starting Docker containers..."
           sudo docker compose up --build
         EOF)
+    
         echo "$output"  # Output for debugging purposes
+    
         if echo "$output" | grep -q "Started SpringRestBackendApplication"; then
-          exit 0
+          echo "Spring application started successfully."
+          exit 0  # Beendet den Workflow erfolgreich
 
 
 
