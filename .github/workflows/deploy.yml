@@ -14,7 +14,9 @@ jobs:
     steps:
     - name: Debug secrets
       run: |
-        echo "EC2_HOST=${{ secrets.AWS_HOST }}"
+        echo "EC2_HOST=${{ secrets.EC2_HOST }}"
+        echo "AWS_HOST=${{ secrets.AWS_HOST }}"
+
 
     - name: Checkout repository
       uses: actions/checkout@v2
