@@ -7,6 +7,14 @@ on:
     branches: [ "master" ]
 
 jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker compose build 
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,19 +44,13 @@ jobs:
 
     - name: SSH and deploy
       run: |
-        output=$(ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
           cd /home/kanbanBE/app
           echo "Stopping existing Docker containers..."
           sudo docker compose down
           echo "Starting Docker containers..."
           sudo docker compose up --build
-        EOF)
-    
-        echo "$output"  # Output for debugging purposes
-    
-        if echo "$output" | grep -q "Started SpringRestBackendApplication"; then
-          echo "Spring application started successfully."
-          exit 0  # Beendet den Workflow erfolgreich
+        EOF &
 
 
 
