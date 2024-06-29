@@ -7,20 +7,28 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker compose build 
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.3
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{ secrets.AWS_HOST}}
-        username: ec2-user
-        key: ${{ secrets.AWS_SSH }}
-        script: |          
-          docker compose down
-          docker compose up
+        ssh-private-key: ${{ secrets.AWS_SSH }}
+
+    - name: Copy files via SSH
+      run: |
+        scp -r -o StrictHostKeyChecking=no . ec2-user@${{ secret.AWS_HOST }}:/home/ec2-user/app
+
+    - name: Deploy with Docker Compose
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.AWS_HOST }} << 'EOF'
+          cd /home/ec2-user/app
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d --build
+        EOF
+
