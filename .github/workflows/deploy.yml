@@ -17,7 +17,7 @@ jobs:
     - name: Set up SSH agent
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.AWS_SSH }}
+        ssh-private-key: ${{ secrets.SSH }}
 
     - name: Copy files via SSH
       run: |
