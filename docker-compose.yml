@@ -23,7 +23,7 @@ services:
       - app
     depends_on:
       - db
-#      - minio
+      - minio
 
   db:
     image: mariadb
