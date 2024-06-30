@@ -43,14 +43,11 @@ jobs:
           cd /home/kanbanBE/app
           echo "Stopping existing Docker containers..."
           sudo docker compose down
-          echo "Starting Docker containers..."
+          echo "Starting Docker containers in detached mode..."
           if sudo docker compose up --build -d; then
             echo "Docker compose up --build -d succeeded."
           else
             echo "Docker compose up --build -d failed."
             exit 1
           fi
-        EOF 
-
-
-
+        EOF
