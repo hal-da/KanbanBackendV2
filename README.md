@@ -40,3 +40,9 @@ Remove Docker container
 ```shell
 docker compose down
 ```
+## Hosting
+* Platform: [AWS](https://aws.amazon.com/)
+* Static IP: http://13.60.19.67/
+* Domain: [http://ec2-13-60-19-67.eu-north-1.compute.amazonaws.com/](http://ec2-13-60-19-67.eu-north-1.compute.amazonaws.com/)
+* Port: 8080
+* Swagger: [http://ec2-13-60-19-67.eu-north-1.compute.amazonaws.com:8080/swagger-ui/index.html](http://ec2-13-60-19-67.eu-north-1.compute.amazonaws.com:8080/swagger-ui/index.html)
