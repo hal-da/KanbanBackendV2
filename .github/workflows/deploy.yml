@@ -39,7 +39,7 @@ jobs:
 
     - name: SSH and deploy
       run: |
-        ssh -f -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-19-67.eu-north-1.compute.amazonaws.com << 'EOF'
           cd /home/kanbanBE/app
           echo "Stopping existing Docker containers..."
           sudo docker compose down
