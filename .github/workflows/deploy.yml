@@ -44,7 +44,12 @@ jobs:
           echo "Stopping existing Docker containers..."
           sudo docker compose down
           echo "Starting Docker containers..."
-          sudo docker compose up --build
+          if sudo docker compose up --build -d; then
+            echo "Docker compose up --build -d succeeded."
+          else
+            echo "Docker compose up --build -d failed."
+            exit 1
+          fi
         EOF 
 
 
