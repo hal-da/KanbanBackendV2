@@ -16,7 +16,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain applicationSecurity(HttpSecurity http) throws Exception {
         http
 //            .cors(AbstractHttpConfigurer::disable)
-//            .csrf(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagementCustomizer -> sessionManagementCustomizer
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .formLogin(AbstractHttpConfigurer::disable)
