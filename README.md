@@ -7,7 +7,7 @@ This is the template project for the BWENG course.
 
 ## Container
 * Spring Boot basic setup container
-  * Port 8080
+  * Port 8443 (HTTPS)
 * MariaDB container
   * Port 3306
 * MinIO container
