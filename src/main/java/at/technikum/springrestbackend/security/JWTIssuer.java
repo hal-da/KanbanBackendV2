@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -16,12 +15,11 @@ public class JWTIssuer {
 
     private final JwtProperties jwtProperties;
 
-    public String issueToken(String id, String email, List<String> roles) {
+    public String issueToken(String id, String email) {
         return JWT.create()
                 .withSubject(id)
                 .withExpiresAt(Instant.now().plus(Duration.of(1, ChronoUnit.DAYS)))
                 .withClaim("email", email)
-                .withClaim("roles", roles)
                 .sign(Algorithm.HMAC256(jwtProperties.getSecretKey()));
     }
 }

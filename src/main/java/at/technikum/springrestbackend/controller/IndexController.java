@@ -21,6 +21,7 @@ public class IndexController {
     public String tokenValidator(@AuthenticationPrincipal UserPrincipal userPrincipal){
         return "Token is valid: " + userPrincipal.getEmail()
                 + " with authorities: " + userPrincipal.getAuthorities()
-                + " and userId: " + userPrincipal.getUserId();
+                + " userId: " + userPrincipal.getUserId()
+                + " email: " + userPrincipal.getEmail();
     }
 }
