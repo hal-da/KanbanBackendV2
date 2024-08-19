@@ -1,21 +1,26 @@
 package at.technikum.springrestbackend.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
     private String username;
+    @JsonIgnore
     private String password;
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "admins_boards",
             joinColumns = @JoinColumn(name = "user_entity_id"),
@@ -23,7 +28,7 @@ public class UserEntity {
     )
     private List<Board> adminBoards;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "members_boards",
             joinColumns = @JoinColumn(name = "user_entity_id"),
@@ -42,54 +47,6 @@ public class UserEntity {
         this.memberBoards = new ArrayList<>();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Board> getAdminBoards() {
-        return adminBoards;
-    }
-
-    public void setAdminBoards(List<Board> adminBoards) {
-        this.adminBoards = adminBoards;
-    }
-
-    public List<Board> getMemberBoards() {
-        return memberBoards;
-    }
-
-    public void setMemberBoards(List<Board> memberBoards) {
-        this.memberBoards = memberBoards;
-    }
-
     public void addAdminBoard(Board board) {
         this.adminBoards.add(board);
     }
@@ -104,5 +61,15 @@ public class UserEntity {
 
     public void removeMemberBoard(Board board) {
         this.memberBoards.remove(board);
+    }
+
+    public String toString() {
+        return "UserEntity [" +
+                "id=" + id + "," +
+                "username=" + username + ", " +
+                "password=" + password + ", " +
+                "email=" + email + ", " +
+                "adminBoards=" + adminBoards + ", " +
+                "memberBoards=" + memberBoards + "]";
     }
 }

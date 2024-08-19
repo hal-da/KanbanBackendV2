@@ -125,6 +125,28 @@ public class Board extends BaseModel {
         this.admins.remove(user);
     }
 
+    public boolean idInAdmins(String id) {
+        for (UserEntity user : this.admins) {
+            if (user.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean idInMembers(String id) {
+        for (UserEntity user : this.members) {
+            if (user.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean idInAdminsOrMembers(String id) {
+        return idInAdmins(id) || idInMembers(id);
+    }
+
     @Override
     public String toString() {
         return "Board{" +

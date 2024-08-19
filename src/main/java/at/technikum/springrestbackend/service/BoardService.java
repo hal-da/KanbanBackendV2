@@ -5,33 +5,24 @@ import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.model.Board;
 import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.repository.BoardRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 
     private final BoardRepository boardRepository;
     private final ColumnService columnService;
 
-    public BoardService(BoardRepository boardRepository, ColumnService columnService) {
-        this.boardRepository = boardRepository;
-        this.columnService = columnService;
-    }
-
-    public Board save(Board board) throws EntityNotFoundException {
+    public Board save(Board board, UserEntity user) throws EntityNotFoundException {
         // new and empty board
         if (board.getId() == null) {
             board = new Board(board.getTitle());
             board.setColumns(columnService.createStandardColumns(board));
-            // TODO: remove this test user
-            UserEntity testUser = new UserEntity(
-                    "testName",
-                    "testPassword",
-                    "testEmail");
-            board.addAdmin(testUser);
-            board.addMember(testUser);
+            board.addAdmin(user);
+            board.addMember(user);
         }
         boardRepository.save(board);
         return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);

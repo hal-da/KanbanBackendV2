@@ -3,17 +3,15 @@ package at.technikum.springrestbackend.mapper;
 import at.technikum.springrestbackend.dto.PublicUserDto;
 import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class PublicUserMapper {
     private final UserRepository userRepository;
-
-    public PublicUserMapper(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     // maps a UserEntity to a PublicUserDto
     public PublicUserDto toPublicUserDto(UserEntity user) {
