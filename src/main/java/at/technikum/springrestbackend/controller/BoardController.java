@@ -43,7 +43,7 @@ public class BoardController {
             throws EntityNotFoundException {
         UserEntity user = userService.findByEmail(userPrincipal.getEmail());
 
-        return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto), user));
+        return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto, user), user));
     }
 
     @GetMapping("/{id}")
@@ -52,8 +52,12 @@ public class BoardController {
     }
 
     @PutMapping
-    public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto) {
-        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto)));
+    public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto,
+                                @AuthenticationPrincipal UserPrincipal userPrincipal)
+            throws EntityNotFoundException {
+        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+
+        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto, user)));
     }
 
     @DeleteMapping("/{id}")

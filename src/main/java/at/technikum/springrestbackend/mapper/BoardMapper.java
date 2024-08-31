@@ -22,10 +22,10 @@ public class BoardMapper {
         this.publicUserMapper = publicUserMapper;
     }
 
-    public Board toBoard(BoardDto boardDto) {
+    public Board toBoard(BoardDto boardDto, UserEntity user) {
 
         if(boardDto.getId() == null) {
-            return new Board(boardDto.getTitle());
+            return new Board(boardDto.getTitle(), user);
         }
 
 

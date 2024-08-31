@@ -19,10 +19,11 @@ public class BoardService {
     public Board save(Board board, UserEntity user) throws EntityNotFoundException {
         // new and empty board
         if (board.getId() == null) {
-            board = new Board(board.getTitle());
+            board = new Board(board.getTitle(), user);
             board.setColumns(columnService.createStandardColumns(board));
             board.addAdmin(user);
             board.addMember(user);
+
         }
         boardRepository.save(board);
         return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);

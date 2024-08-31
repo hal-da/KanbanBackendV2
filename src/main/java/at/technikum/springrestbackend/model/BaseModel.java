@@ -1,19 +1,27 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
 @MappedSuperclass
 public abstract class BaseModel {
 
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     protected String id;
     protected Date createdAt;
-//    private UserEntity createdBy;
     protected Date lastChangeAt;
-//    private UserEntity lastChangeBy;
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    protected UserEntity createdBy;
+    @ManyToOne
+    @JoinColumn(name = "last_change_by_id")
+    protected UserEntity lastChangeBy;
 
 //
 //    /**
@@ -40,26 +48,5 @@ public abstract class BaseModel {
 
     public BaseModel(String id){
         this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-
-    public Date getLastChangeAt() {
-        return lastChangeAt;
-    }
-
-    public void setLastChangeAt(Date lastChangeAt) {
-        this.lastChangeAt = lastChangeAt;
     }
 }
