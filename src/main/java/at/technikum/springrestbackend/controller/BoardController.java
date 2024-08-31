@@ -21,6 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/boards")
 public class BoardController {
 
     private final BoardService boardService;
@@ -29,13 +30,13 @@ public class BoardController {
     private final UserService userService;
 
 
-    @GetMapping("/boards")
+    @GetMapping()
     public List<PublicBoardDto> getBoards(){
         System.out.println("getBoards");
         return publicBoardMapper.toPublicBoardDtos(boardService.findAll());
     }
 
-    @PostMapping("/boards")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public BoardDto createBoard(
             @RequestBody @Valid BoardDto boardDto,
