@@ -1,11 +1,15 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 public class Board extends BaseModel {
 
@@ -18,7 +22,7 @@ public class Board extends BaseModel {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
     private List<Column> columns;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "members_boards",
             joinColumns = @JoinColumn(name = "boards_id"),
@@ -26,7 +30,7 @@ public class Board extends BaseModel {
     )
     private List<UserEntity> members;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "admins_boards",
             joinColumns = @JoinColumn(name = "boards_id"),
@@ -54,46 +58,20 @@ public class Board extends BaseModel {
         this.lastChangeAt = lastChangeAt;
     }
 
-    public Board(String title) {
+//    empty new board
+    public Board(String title, UserEntity user) {
         super();
         this.title = title;
         this.columns = new ArrayList<>();
         this.members = new ArrayList<>();
         this.admins = new ArrayList<>();
+        Date now = new Date();
+        this.createdAt = now;
+        this.lastChangeAt = now;
+        this.createdBy = user;
+        this.lastChangeBy = user;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<Column> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<Column> columnEntities) {
-        this.columns = columnEntities;
-    }
-
-    public List<UserEntity> getMembers() {
-        return members;
-    }
-
-
-    public void setMembers(List<UserEntity> members) {
-        this.members = members;
-    }
-
-    public List<UserEntity> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<UserEntity> admins) {
-        this.admins = admins;
-    }
 
     public void addColumn(Column column) {
         this.columns.add(column);

@@ -21,6 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/boards")
 public class BoardController {
 
     private final BoardService boardService;
@@ -29,13 +30,13 @@ public class BoardController {
     private final UserService userService;
 
 
-    @GetMapping("/boards")
+    @GetMapping()
     public List<PublicBoardDto> getBoards(){
         System.out.println("getBoards");
         return publicBoardMapper.toPublicBoardDtos(boardService.findAll());
     }
 
-    @PostMapping("/boards")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public BoardDto createBoard(
             @RequestBody @Valid BoardDto boardDto,
@@ -43,7 +44,7 @@ public class BoardController {
             throws EntityNotFoundException {
         UserEntity user = userService.findByEmail(userPrincipal.getEmail());
 
-        return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto), user));
+        return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto, user), user));
     }
 
     @GetMapping("/{id}")
@@ -52,8 +53,12 @@ public class BoardController {
     }
 
     @PutMapping
-    public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto) {
-        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto)));
+    public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto,
+                                @AuthenticationPrincipal UserPrincipal userPrincipal)
+            throws EntityNotFoundException {
+        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+
+        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto, user)));
     }
 
     @DeleteMapping("/{id}")

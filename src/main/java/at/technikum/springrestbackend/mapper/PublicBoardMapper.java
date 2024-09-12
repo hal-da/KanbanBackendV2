@@ -27,7 +27,12 @@ public class PublicBoardMapper {
                 board.getId(),
                 board.getTitle(),
                 members,
-                admins);
+                admins,
+                board.getCreatedAt(),
+                board.getLastChangeAt(),
+                publicUserMapper.toPublicUserDto(board.getCreatedBy()),
+                publicUserMapper.toPublicUserDto(board.getLastChangeBy())
+        );
     }
 
     public List<PublicBoardDto> toPublicBoardDtos(List<Board> boards) {
