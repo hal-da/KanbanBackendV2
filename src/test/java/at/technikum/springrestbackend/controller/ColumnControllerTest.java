@@ -103,7 +103,7 @@ class ColumnControllerTest {
         UserPrincipal userPrincipal = mock(UserPrincipal.class);
         when(userPrincipal.getUserId()).thenReturn("user-id");
 
-        Board board = new Board("title");
+        Board board = new Board();
         Column column = new Column("column-id", "title", 1);
         ColumnDto columnDto = new ColumnDto("column-id", "title", 1);
 

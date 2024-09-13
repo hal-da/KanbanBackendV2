@@ -62,8 +62,8 @@ class PublicBoardMapperTest {
         Board board2 = new Board("2", "Board 2", null, null, null, null, null);
         List<Board> boards = Arrays.asList(board1, board2);
 
-        PublicBoardDto dto1 = new PublicBoardDto("1", "Board 1", null, null);
-        PublicBoardDto dto2 = new PublicBoardDto("2", "Board 2", null, null);
+        PublicBoardDto dto1 = new PublicBoardDto();
+        PublicBoardDto dto2 = new PublicBoardDto();
 
         when(publicBoardMapper.toPublicBoardDto(board1)).thenReturn(dto1);
         when(publicBoardMapper.toPublicBoardDto(board2)).thenReturn(dto2);

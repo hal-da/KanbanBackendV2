@@ -16,7 +16,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board("Project Board");
+        board = new Board();
         user1 = new UserEntity("user1", "password1", "user1@example.com");
         user2 = new UserEntity("user2", "password2", "user2@example.com");
         column1 = new Column("To Do", board, 1);

@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -60,9 +61,11 @@ class BoardControllerTest {
 
     @Test
     void testGetBoards() throws Exception {
-        PublicBoardDto publicBoardDto = new PublicBoardDto("board-id", "title", Collections.emptyList(), Collections.emptyList());
+        PublicBoardDto publicBoardDto = new PublicBoardDto(
+
+                );
         when(publicBoardMapper.toPublicBoardDtos(any())).thenReturn(Collections.singletonList(publicBoardDto));
-        when(boardService.findAll()).thenReturn(Collections.singletonList(new Board("title")));
+        when(boardService.findAll()).thenReturn(Collections.singletonList(new Board()));
 
         mockMvc.perform(get("/boards"))
                 .andExpect(status().isOk())
@@ -74,9 +77,9 @@ class BoardControllerTest {
     void testCreateBoard() throws Exception {
         BoardDto boardDto = new BoardDto("board-id", "title", Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), null, null);
         UserEntity user = new UserEntity("username", "password", "user@example.com");
-        Board board = new Board("title");
+        Board board = new Board();
         when(userService.findByEmail(anyString())).thenReturn(user);
-        when(boardMapper.toBoard(any(BoardDto.class))).thenReturn(board);
+        when(boardMapper.toBoard(boardDto, user));
         when(boardService.save(any(Board.class), any(UserEntity.class))).thenReturn(board);
         when(boardMapper.toDto(any(Board.class))).thenReturn(boardDto);
 
@@ -91,7 +94,7 @@ class BoardControllerTest {
     @Test
     void testGetBoard() throws Exception {
         BoardDto boardDto = new BoardDto("board-id", "title", Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), null, null);
-        when(boardService.findById(anyString())).thenReturn(new Board("title"));
+        when(boardService.findById(anyString())).thenReturn(new Board());
         when(boardMapper.toDto(any(Board.class))).thenReturn(boardDto);
 
         mockMvc.perform(get("/board-id"))
@@ -103,8 +106,9 @@ class BoardControllerTest {
     @Test
     void testUpdateBoard() throws Exception {
         BoardDto boardDto = new BoardDto("board-id", "title", Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), null, null);
-        Board board = new Board("title");
-        when(boardMapper.toBoard(any(BoardDto.class))).thenReturn(board);
+        Board board = new Board();
+        UserEntity user = new UserEntity("username", "password", "user@example.com");
+        when(boardMapper.toBoard(boardDto, user));
         when(boardService.update(any(Board.class))).thenReturn(board);
         when(boardMapper.toDto(any(Board.class))).thenReturn(boardDto);
 

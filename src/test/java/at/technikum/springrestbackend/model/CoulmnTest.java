@@ -9,7 +9,7 @@ public class CoulmnTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board("Project Board");
+        board = new Board();
         column = new Column("To Do", board, 1);
     }
 

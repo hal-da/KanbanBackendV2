@@ -39,9 +39,9 @@ public class BoardMapperTest {
     void testToBoard_withNullId() {
         // Given
         BoardDto boardDto = new BoardDto(null, "Test Board", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Date(), new Date());
-
         // When
-        Board board = boardMapper.toBoard(boardDto);
+        UserEntity testUser = new UserEntity("Testuser", "Testpassword", "Testemail@test");
+        Board board = boardMapper.toBoard(boardDto, testUser);
 
         // Then
         assertThat(board.getId()).isNull();
@@ -54,12 +54,14 @@ public class BoardMapperTest {
         // Given
         List<ColumnDto> columnDtos = new ArrayList<>();
         List<Column> columns = new ArrayList<>();
-        BoardDto boardDto = new BoardDto("1", "Test Board", columnDtos, new ArrayList<>(), new ArrayList<>(), new Date(), new Date());
 
+
+        BoardDto boardDto = new BoardDto("1", "Test Board", columnDtos, new ArrayList<>(), new ArrayList<>(), new Date(), new Date());
+        UserEntity userEntity = new UserEntity("Test Board", "Password test", "testemail@test.at");
         when(columnMapper.mapToColumns(columnDtos)).thenReturn(columns);
 
         // When
-        Board board = boardMapper.toBoard(boardDto);
+        Board board = boardMapper.toBoard(boardDto, userEntity);
 
         // Then
         assertThat(board.getId()).isEqualTo("1");
