@@ -57,8 +57,7 @@ public class BoardController {
                                 @AuthenticationPrincipal UserPrincipal userPrincipal)
             throws EntityNotFoundException {
         UserEntity user = userService.findByEmail(userPrincipal.getEmail());
-
-        return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto, user)));
+        return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto, user), user));
     }
 
     @DeleteMapping("/{id}")

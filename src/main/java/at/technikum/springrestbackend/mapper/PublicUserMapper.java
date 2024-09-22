@@ -24,11 +24,9 @@ public class PublicUserMapper {
     public List<PublicUserDto> toPublicUserDtos(List<UserEntity> users) {
         return users.stream().map(this::toPublicUserDto).toList();
     }
-//
-//    // maps a PublicUserDto to a UserEntity
-//    public UserEntity toUserEntity(PublicUserDto user) {
-//        return new UserEntity(
-//                user.getId(),
-//                user.getUsername());
-//    }
+
+    // maps a PublicUserDto to a UserEntity
+    public UserEntity toUserEntity(PublicUserDto publicUserDto) {
+        return userRepository.findById(publicUserDto.getId()).orElseThrow();
+    }
 }

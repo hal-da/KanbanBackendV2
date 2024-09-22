@@ -9,10 +9,12 @@ import at.technikum.springrestbackend.exception.PasswordsNotSimilarException;
 import at.technikum.springrestbackend.mapper.PublicUserMapper;
 import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.security.JWTIssuer;
+import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public PublicUserDto register(@RequestBody @Valid RegisterDto registerDto)
             throws EmailExistsException, PasswordsNotSimilarException {
+        System.out.println("register XXXXXXXXXXXXX");
         if(!registerDto.getPassword1().equals(registerDto.getPassword2())){
             throw new PasswordsNotSimilarException("Passwords are not similar");
         }
@@ -55,5 +58,14 @@ public class AuthController {
         UserEntity user = new UserEntity(registerDto.getUserName(), encodedPW, registerDto.getEmail());
         UserEntity registeredUser = userService.register(user);
         return publicUserMapper.toPublicUserDto(registeredUser);
+    }
+
+
+    @GetMapping("/whoami")
+    public PublicUserDto whoAmI(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        System.out.println(userPrincipal.getEmail());
+        System.out.println("who am i XXXXXXXXXXXXX");
+        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+        return publicUserMapper.toPublicUserDto(user);
     }
 }

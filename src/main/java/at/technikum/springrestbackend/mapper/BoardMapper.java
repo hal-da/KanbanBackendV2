@@ -4,23 +4,21 @@ import at.technikum.springrestbackend.dto.BoardDto;
 import at.technikum.springrestbackend.dto.ColumnDto;
 import at.technikum.springrestbackend.dto.PublicUserDto;
 import at.technikum.springrestbackend.model.Board;
-import at.technikum.springrestbackend.model.Column;
 import at.technikum.springrestbackend.model.UserEntity;
+import at.technikum.springrestbackend.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class BoardMapper {
 
     private final ColumnMapper columnMapper;
     private final PublicUserMapper publicUserMapper;
+    private final BoardService boardService;
 
-    public BoardMapper(ColumnMapper columnMapper, PublicUserMapper publicUserMapper) {
-        this.columnMapper = columnMapper;
-        this.publicUserMapper = publicUserMapper;
-    }
 
     public Board toBoard(BoardDto boardDto, UserEntity user) {
 
@@ -32,28 +30,24 @@ public class BoardMapper {
         // sollte eigentlich nicht vorkommen, wird in eigener update funktion abgebildet
         // eventuell hier eine exception werfen
 
-        List<Column> columnDtos = columnMapper.mapToColumns(boardDto.getColumns());
-        List<UserEntity> members = new ArrayList<>();
-        List<UserEntity> admins = new ArrayList<>();
-
-
-        return new Board(
-                boardDto.getId(),
-                boardDto.getTitle(),
-                columnDtos,
-                members,
-                admins,
-                boardDto.getCreatedAt(),
-                boardDto.getLastChangeAt()
-        );
-
+        Board board = boardService.findById(boardDto.getId());
+        board.setTitle(boardDto.getTitle());
+        System.out.println("board im mapper: " + board.getTitle());
+//        board.setLastChangeAt(new Date());
+//        board.setLastChangeBy(user);
+        return board;
     }
 
     public BoardDto toDto(Board board) {
 
+        System.out.println("board im mapper: " + board.getTitle());
+
         List<ColumnDto> columnDtos = columnMapper.toDtos(board.getColumns());
+        System.out.println("columns: " + columnDtos);
         List<PublicUserDto> members = publicUserMapper.toPublicUserDtos(board.getMembers());
+        System.out.println("members: " + members);
         List<PublicUserDto> admins = publicUserMapper.toPublicUserDtos(board.getAdmins());
+        System.out.println("admins: " + admins);
 
         return new BoardDto(
                 board.getId(),
