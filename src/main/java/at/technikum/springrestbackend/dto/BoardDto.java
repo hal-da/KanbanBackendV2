@@ -50,4 +50,21 @@ public class BoardDto {
         this.columns.remove(column);
     }
 
+    public void addMember(PublicUserDto user) {
+        this.members.add(user);
+    }
+
+    @Override
+    public String toString() {
+        return "BoardDto{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", columns=" + columns +
+                ", members=" + members +
+                ", admins=" + admins +
+                ", createdAt=" + createdAt +
+                ", lastChangeAt=" + lastChangeAt +
+                '}';
+    }
+
 }

@@ -7,11 +7,11 @@ import lombok.Setter;
 @Getter
 public class PublicUserDto {
     private String id;
-    private String username;
+    private String userName;
 
-    public PublicUserDto(String id, String username) {
+    public PublicUserDto(String id, String userName) {
         this.id = id;
-        this.username = username;
+        this.userName = userName;
     }
 
     public PublicUserDto() {
