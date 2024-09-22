@@ -48,7 +48,9 @@ public class Board extends BaseModel {
             List<UserEntity> members,
             List<UserEntity> admins,
             Date createdAt,
-            Date lastChangeAt) {
+            Date lastChangeAt,
+            UserEntity createdBy,
+            UserEntity lastChangeBy) {
         this.id = id;
         this.title = title;
         this.columns = columns;
@@ -56,6 +58,8 @@ public class Board extends BaseModel {
         this.admins = admins;
         this.createdAt = createdAt;
         this.lastChangeAt = lastChangeAt;
+        this.createdBy = createdBy;
+        this.lastChangeBy = lastChangeBy;
     }
 
 //    empty new board

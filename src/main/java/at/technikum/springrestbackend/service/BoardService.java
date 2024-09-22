@@ -41,7 +41,7 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public Board update(Board board){
-        return boardRepository.save(board);
+    public void update(Board board){
+        boardRepository.save(board);
     }
 }
