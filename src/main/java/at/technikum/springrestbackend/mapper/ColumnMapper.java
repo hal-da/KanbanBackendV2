@@ -1,28 +1,40 @@
 package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ColumnDto;
+import at.technikum.springrestbackend.dto.TaskDto;
 import at.technikum.springrestbackend.model.Column;
+import at.technikum.springrestbackend.model.Task;
+import at.technikum.springrestbackend.model.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Component
 public class ColumnMapper {
+    private final TaskMapper taskMapper;
 
+    public Column toColumn(ColumnDto columnDto, UserEntity user) {
 
-    public Column toColumn(ColumnDto columnDto) {
+        List<Task> tasks = taskMapper.toTasks(columnDto.getTasks(), user);
+
         return new Column(
                 columnDto.getId(),
                 columnDto.getTitle(),
-                columnDto.getOrder()
+                columnDto.getOrder(),
+                tasks
         );
     }
 
     public ColumnDto toDto(Column column) {
+
+        List<TaskDto> taskDtos = taskMapper.toDtos(column.getTasks());
+
         return new ColumnDto(
                 column.getId(),
                 column.getTitle(),
-                column.getOrder()
+                column.getOrder(),
+                taskDtos
         );
     }
 
@@ -33,10 +45,10 @@ public class ColumnMapper {
                 .toList();
     }
 
-    public List<Column> mapToColumns(List<ColumnDto> columnDtos) {
+    public List<Column> mapToColumns(List<ColumnDto> columnDtos, UserEntity user) {
         return columnDtos
                 .stream()
-                .map(this::toColumn)
+                .map(columnDto -> toColumn(columnDto, user))
                 .toList();
     }
 

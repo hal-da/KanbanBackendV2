@@ -1,45 +1,29 @@
 package at.technikum.springrestbackend.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+
+@Setter
+@Getter
 public class ColumnDto {
 
     private String id;
     @NotBlank
     private String title;
     private int order;
+    private List<TaskDto> tasks;
 
-    public ColumnDto(String id, String title, int order) {
+    public ColumnDto(String id, String title, int order, List<TaskDto> tasks) {
         this.id = id;
         this.title = title;
         this.order = order;
+        this.tasks = tasks;
     }
 
     public ColumnDto() {
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
