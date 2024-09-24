@@ -13,9 +13,6 @@ import java.util.List;
 @Entity
 public class Board extends BaseModel {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
-//    private String id;
 
     private String title;
 
