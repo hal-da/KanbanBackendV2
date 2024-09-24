@@ -1,7 +1,14 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class Column {
 
@@ -9,6 +16,7 @@ public class Column {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Getter
     private int order;
 
     private String title;
@@ -16,6 +24,9 @@ public class Column {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "column")
+    private List<Task> tasks;
 
 
     public Column() {
@@ -26,61 +37,41 @@ public class Column {
         this.title = column.getTitle();
         this.board = column.getBoard();
         this.order = column.getOrder();
+        this.tasks = column.getTasks();
     }
 
     public Column(String title) {
         this.title = title;
+        this.tasks = new ArrayList<>();
     }
 
-    public Column(String id, String title, int order) {
+    public Column(String id, String title, int order, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.order = order;
+        this.tasks = tasks;
     }
 
-    public Column(String title, Board board, int order) {
+    public Column(String title, Board board, int order, List<Task> tasks) {
         this.title = title;
         this.board = board;
         this.order = order;
+        this.tasks = tasks;
     }
 
-    public Column(String id, String title, Board board, int order) {
+    public Column(String id, String title, Board board, int order, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.board = board;
         this.order = order;
+        this.tasks = tasks;
     }
 
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
+    public Column(String string, Board board, int ordinal) {
+        this.title = string;
         this.board = board;
+        this.order = ordinal;
+        this.tasks = new ArrayList<>();
     }
 
     @Override

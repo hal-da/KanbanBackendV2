@@ -53,7 +53,6 @@ public class ColumnController {
     }
 
     @DeleteMapping("/{columnId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteColumn(@PathVariable String columnId, @PathVariable String boardId) {
         columnService.deleteColumn(columnId);
     }

@@ -79,7 +79,7 @@ public class Board extends BaseModel {
     }
 
     public Column addColumn(String title) {
-        Column column = new Column(title, this, this.columns.getLast().getOrder() + 1);
+        Column column = new Column(title, this, this.columns.getLast().getOrder() + 1, new ArrayList<>());
         this.columns.add(column);
         return column;
     }
