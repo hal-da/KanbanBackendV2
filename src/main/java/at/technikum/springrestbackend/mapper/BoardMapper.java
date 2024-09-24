@@ -9,6 +9,8 @@ import at.technikum.springrestbackend.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,18 +25,29 @@ public class BoardMapper {
     public Board toBoard(BoardDto boardDto, UserEntity user) {
 
         if(boardDto.getId() == null) {
+            System.out.println("creating new board");
             return new Board(boardDto.getTitle(), user);
         }
 
+        ArrayList<UserEntity> members = new ArrayList<>();
+        ArrayList<UserEntity> admins = new ArrayList<>();
 
-        // sollte eigentlich nicht vorkommen, wird in eigener update funktion abgebildet
-        // eventuell hier eine exception werfen
+        for (PublicUserDto member : boardDto.getMembers()) {
+            System.out.println("member: " + member);
+            members.add(publicUserMapper.toUserEntity(member));
+        }
+        for (PublicUserDto admin : boardDto.getAdmins()) {
+            System.out.println("admin: " + admin);
+            admins.add(publicUserMapper.toUserEntity(admin));
+        }
+
 
         Board board = boardService.findById(boardDto.getId());
         board.setTitle(boardDto.getTitle());
-        System.out.println("board im mapper: " + board.getTitle());
-//        board.setLastChangeAt(new Date());
-//        board.setLastChangeBy(user);
+        board.setLastChangeAt(new Date());
+        board.setLastChangeBy(user);
+        board.setMembers(members);
+        board.setAdmins(admins);
         return board;
     }
 

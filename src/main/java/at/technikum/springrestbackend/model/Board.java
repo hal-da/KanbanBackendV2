@@ -13,9 +13,6 @@ import java.util.List;
 @Entity
 public class Board extends BaseModel {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
-//    private String id;
 
     private String title;
 
@@ -82,8 +79,7 @@ public class Board extends BaseModel {
     }
 
     public Column addColumn(String title) {
-//        Column column = new Column(title, this, this.columns.getLast().getOrder() + 1);
-        Column column = new Column(title, this,0);
+        Column column = new Column(title, this, this.columns.getLast().getOrder() + 1, new ArrayList<>());
         this.columns.add(column);
         return column;
     }
