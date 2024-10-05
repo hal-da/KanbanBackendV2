@@ -28,6 +28,8 @@ public class Column {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "column")
     private List<Task> tasks;
 
+    private int wipLimit;
+
 
     public Column() {
     }
@@ -38,6 +40,7 @@ public class Column {
         this.board = column.getBoard();
         this.order = column.getOrder();
         this.tasks = column.getTasks();
+        this.wipLimit = column.getWipLimit();
     }
 
     public Column(String title) {
@@ -45,18 +48,20 @@ public class Column {
         this.tasks = new ArrayList<>();
     }
 
-    public Column(String id, String title, int order, List<Task> tasks) {
+    public Column(String id, String title, int order, List<Task> tasks, int wipLimit) {
         this.id = id;
         this.title = title;
         this.order = order;
         this.tasks = tasks;
+        this.wipLimit = wipLimit;
     }
 
-    public Column(String title, Board board, int order, List<Task> tasks) {
+    public Column(String title, Board board, int order, List<Task> tasks, int wipLimit) {
         this.title = title;
         this.board = board;
         this.order = order;
         this.tasks = tasks;
+        this.wipLimit = wipLimit;
     }
 
     public Column(String id, String title, Board board, int order, List<Task> tasks) {
@@ -67,11 +72,12 @@ public class Column {
         this.tasks = tasks;
     }
 
-    public Column(String string, Board board, int ordinal) {
+    public Column(String string, Board board, int ordinal, int wipLimit) {
         this.title = string;
         this.board = board;
         this.order = ordinal;
         this.tasks = new ArrayList<>();
+        this.wipLimit = wipLimit;
     }
 
     @Override

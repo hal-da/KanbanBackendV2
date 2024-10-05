@@ -15,12 +15,14 @@ public class ColumnDto {
     private String title;
     private int order;
     private List<TaskDto> tasks;
+    private int wipLimit;
 
-    public ColumnDto(String id, String title, int order, List<TaskDto> tasks) {
+    public ColumnDto(String id, String title, int order, List<TaskDto> tasks, int wipLimit) {
         this.id = id;
         this.title = title;
         this.order = order;
         this.tasks = tasks;
+        this.wipLimit = wipLimit;
     }
 
     public ColumnDto() {

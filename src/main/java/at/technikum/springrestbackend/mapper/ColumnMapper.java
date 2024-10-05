@@ -22,7 +22,8 @@ public class ColumnMapper {
                 columnDto.getId(),
                 columnDto.getTitle(),
                 columnDto.getOrder(),
-                tasks
+                tasks,
+                columnDto.getWipLimit()
         );
     }
 
@@ -34,7 +35,8 @@ public class ColumnMapper {
                 column.getId(),
                 column.getTitle(),
                 column.getOrder(),
-                taskDtos
+                taskDtos,
+                column.getWipLimit()
         );
     }
 
@@ -45,7 +47,7 @@ public class ColumnMapper {
                 .toList();
     }
 
-    public List<Column> mapToColumns(List<ColumnDto> columnDtos, UserEntity user) {
+    public List<Column> toColumns(List<ColumnDto> columnDtos, UserEntity user) {
         return columnDtos
                 .stream()
                 .map(columnDto -> toColumn(columnDto, user))

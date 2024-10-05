@@ -29,7 +29,7 @@ public class ColumnService {
         ArrayList<Column> columns = new ArrayList<>();
 
         for (StandardColumnTypes type : StandardColumnTypes.values()) {
-            columns.add(new Column(type.toString(), board, type.ordinal()));
+            columns.add(new Column(type.toString(), board, type.ordinal(), 2));
         }
         return columns;
     }
