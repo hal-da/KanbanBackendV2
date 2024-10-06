@@ -14,13 +14,13 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final ColumnService columnService;
+//    private final ColumnService columnService;
 
     public Board save(Board board, UserEntity user) throws EntityNotFoundException {
         // new and empty board
         if (board.getId() == null) {
             board = new Board(board.getTitle(), user);
-            board.setColumns(columnService.createStandardColumns(board));
+//            board.setColumns(columnService.createStandardColumns(board));
             board.addAdmin(user);
             board.addMember(user);
 

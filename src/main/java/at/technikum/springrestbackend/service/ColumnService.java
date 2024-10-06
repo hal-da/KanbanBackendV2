@@ -50,9 +50,6 @@ public class ColumnService {
     }
 
     public Column save(Column column) {
-        if (column.getId() == null) {
-            column = new Column(column);
-        }
         columnRepository.save(column);
         return columnRepository.findById(column.getId()).orElseThrow(EntityNotFoundException::new);
     }

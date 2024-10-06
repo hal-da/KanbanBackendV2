@@ -9,6 +9,8 @@ import at.technikum.springrestbackend.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @RequiredArgsConstructor
 @Component
@@ -18,8 +20,12 @@ public class ColumnMapper {
 
     public Column toColumn(ColumnDto columnDto, UserEntity user) {
 
-        List<Task> tasks = taskMapper.toTasks(columnDto.getTasks(), user);
+        if(columnDto.getId() == null) {
+            System.out.println("createNewColumn");
+            return createNewColumn(columnDto, user);
+        }
 
+        List<Task> tasks = taskMapper.toTasks(columnDto.getTasks(), user);
         UserEntity createdBy = userMapper.toUserEntity(columnDto.getCreatedBy());
         UserEntity lastChangeBy = userMapper.toUserEntity(columnDto.getLastChangeBy());
 
@@ -33,9 +39,24 @@ public class ColumnMapper {
                 columnDto.getLastChangeAt(),
                 createdBy,
                 lastChangeBy
-
         );
     }
+
+    private Column createNewColumn(ColumnDto columnDto, UserEntity user) {
+        System.out.println("createNewColumn method" +  user.getId());
+        Column column = new Column();
+        column.setTitle(columnDto.getTitle());
+        column.setOrder(columnDto.getOrder());
+        column.setWipLimit(columnDto.getWipLimit());
+        column.setCreatedAt(new Date());
+        column.setLastChangeAt(new Date());
+        column.setCreatedBy(user);
+        column.setLastChangeBy(user);
+        column.setTasks(new ArrayList<>());
+        System.out.println("createNewColumn method created by " +  column.getCreatedBy().getId());
+        return column;
+    }
+
 
     public ColumnDto toDto(Column column) {
 

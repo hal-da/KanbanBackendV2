@@ -18,8 +18,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserEntity findById(String id){
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found"));
+    public UserEntity findById(String id) {
+        System.out.println("UserService.findById" + id);
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found"));
+        System.out.println("found user");
+        return user;
     }
 
     public UserEntity findByEmail(String email){

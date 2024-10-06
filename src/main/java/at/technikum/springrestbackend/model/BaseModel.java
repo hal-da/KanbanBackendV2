@@ -24,17 +24,6 @@ public abstract class BaseModel {
     @JoinColumn(name = "last_change_by_id")
     protected UserEntity lastChangeBy;
 
-//
-//    /**
-//     * Constructor for creating a new ChangeLog
-//     * @param createdBy the user who created the ChangeLog
-//     */
-//    public BaseModel(UserEntity createdBy) {
-//        this.createdBy = createdBy;
-//        this.createdAt = new Date();
-//        this.lastChangeAt = new Date();
-//        this.lastChangeBy = createdBy;
-//    }
 
     public BaseModel() {
         this.createdAt = new Date();

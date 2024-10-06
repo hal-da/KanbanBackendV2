@@ -35,6 +35,8 @@ public class Column extends BaseModel {
     public Column() {
     }
 
+
+
     public Column(Column column) {
         this.id = column.getId();
         this.title = column.getTitle();
@@ -99,10 +101,10 @@ public class Column extends BaseModel {
         this.tasks = tasks;
     }
 
-    public Column(String string, Board board, int ordinal, int wipLimit) {
+    public Column(String string, Board board, int order, int wipLimit) {
         this.title = string;
         this.board = board;
-        this.order = ordinal;
+        this.order = order;
         this.tasks = new ArrayList<>();
         this.wipLimit = wipLimit;
     }

@@ -6,9 +6,11 @@ import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.mapper.ColumnMapper;
 import at.technikum.springrestbackend.model.Board;
 import at.technikum.springrestbackend.model.Column;
+import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.BoardService;
 import at.technikum.springrestbackend.service.ColumnService;
+import at.technikum.springrestbackend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ public class ColumnController {
     private final ColumnService columnService;
     private final ColumnMapper columnMapper;
     private final BoardService boardService;
+    private final UserService userService;
 
     @GetMapping
     public List<ColumnDto> getColumns(@PathVariable String boardId) {
@@ -65,12 +68,20 @@ public class ColumnController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable String boardId,
             @RequestBody @Valid ColumnDto columnDto) {
+        System.out.println("createColumn " + columnDto);
         Board board = boardService.findById(boardId);
+        System.out.println("createColumn board id   " + boardId);
         if(!board.idInAdminsOrMembers(userPrincipal.getUserId())){
             throw new RuntimeException("User is not allowed to create a column");
         }
-        Column column = board.addColumn(columnDto.getTitle());
-        boardService.update(board);
-        return columnMapper.toDto(columnService.getColumnById(column.getId()));
+        System.out.println("get user " + userPrincipal.getUserId());
+        UserEntity user = userService.findById(userPrincipal.getUserId());
+        System.out.println("createColumn " + user.getId());
+        System.out.println("userId " + user.getId());
+        Column column = columnMapper.toColumn(columnDto, user);
+        column.setBoard(board);
+        Column c = columnService.save(column);
+        System.out.println("createColumn before seinding ");
+        return columnMapper.toDto(c);
     }
 }
