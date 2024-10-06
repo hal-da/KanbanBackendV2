@@ -25,7 +25,6 @@ public class BoardMapper {
     public Board toBoard(BoardDto boardDto, UserEntity user) {
 
         if(boardDto.getId() == null) {
-            System.out.println("creating new board");
             return new Board(boardDto.getTitle(), user);
         }
 
@@ -33,14 +32,11 @@ public class BoardMapper {
         ArrayList<UserEntity> admins = new ArrayList<>();
 
         for (PublicUserDto member : boardDto.getMembers()) {
-            System.out.println("member: " + member);
             members.add(publicUserMapper.toUserEntity(member));
         }
         for (PublicUserDto admin : boardDto.getAdmins()) {
-            System.out.println("admin: " + admin);
             admins.add(publicUserMapper.toUserEntity(admin));
         }
-
 
         Board board = boardService.findById(boardDto.getId());
         board.setTitle(boardDto.getTitle());
@@ -56,11 +52,8 @@ public class BoardMapper {
         System.out.println("board im mapper: " + board.getTitle());
 
         List<ColumnDto> columnDtos = columnMapper.toDtos(board.getColumns());
-        System.out.println("columns: " + columnDtos);
         List<PublicUserDto> members = publicUserMapper.toPublicUserDtos(board.getMembers());
-        System.out.println("members: " + members);
         List<PublicUserDto> admins = publicUserMapper.toPublicUserDtos(board.getAdmins());
-        System.out.println("admins: " + admins);
 
         return new BoardDto(
                 board.getId(),
@@ -69,7 +62,9 @@ public class BoardMapper {
                 members,
                 admins,
                 board.getCreatedAt(),
-                board.getLastChangeAt()
+                board.getLastChangeAt(),
+                publicUserMapper.toPublicUserDto(board.getCreatedBy()),
+                publicUserMapper.toPublicUserDto(board.getLastChangeBy())
         );
     }
 }

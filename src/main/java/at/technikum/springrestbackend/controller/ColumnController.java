@@ -31,6 +31,7 @@ public class ColumnController {
     public List<ColumnDto> getColumns(@PathVariable String boardId) {
         List<ColumnDto> columnDtos = columnMapper
                 .toDtos(columnService.getColumnsByBoardId(boardId));
+        System.out.println("getColumns");
         System.out.println(columnDtos);
         return columnDtos;
     }
@@ -45,10 +46,11 @@ public class ColumnController {
     }
 
 
-    @PutMapping
+    @PutMapping("/{columnId}")
     public ColumnDto updateColumn(
-            @RequestBody @Valid ColumnDto columnDto,
-            @PathVariable String boardId) {
+            @RequestBody @Valid ColumnDto columnDto, @PathVariable String columnId) {
+        columnDto.setId(columnId);
+        System.out.println("updateColumn");
         return columnMapper.toDto(columnService.updateColumn(columnDto));
     }
 

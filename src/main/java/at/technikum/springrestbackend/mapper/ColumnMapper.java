@@ -1,6 +1,7 @@
 package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ColumnDto;
+import at.technikum.springrestbackend.dto.PublicUserDto;
 import at.technikum.springrestbackend.dto.TaskDto;
 import at.technikum.springrestbackend.model.Column;
 import at.technikum.springrestbackend.model.Task;
@@ -13,30 +14,46 @@ import java.util.List;
 @Component
 public class ColumnMapper {
     private final TaskMapper taskMapper;
+    private final PublicUserMapper userMapper;
 
     public Column toColumn(ColumnDto columnDto, UserEntity user) {
 
         List<Task> tasks = taskMapper.toTasks(columnDto.getTasks(), user);
+
+        UserEntity createdBy = userMapper.toUserEntity(columnDto.getCreatedBy());
+        UserEntity lastChangeBy = userMapper.toUserEntity(columnDto.getLastChangeBy());
 
         return new Column(
                 columnDto.getId(),
                 columnDto.getTitle(),
                 columnDto.getOrder(),
                 tasks,
-                columnDto.getWipLimit()
+                columnDto.getWipLimit(),
+                columnDto.getCreatedAt(),
+                columnDto.getLastChangeAt(),
+                createdBy,
+                lastChangeBy
+
         );
     }
 
     public ColumnDto toDto(Column column) {
 
         List<TaskDto> taskDtos = taskMapper.toDtos(column.getTasks());
+        PublicUserDto createdBy = userMapper.toPublicUserDto(column.getCreatedBy());
+        PublicUserDto lastChangeBy = userMapper.toPublicUserDto(column.getLastChangeBy());
+
 
         return new ColumnDto(
                 column.getId(),
                 column.getTitle(),
                 column.getOrder(),
                 taskDtos,
-                column.getWipLimit()
+                column.getWipLimit(),
+                column.getCreatedAt(),
+                column.getLastChangeAt(),
+                createdBy,
+                lastChangeBy
         );
     }
 
