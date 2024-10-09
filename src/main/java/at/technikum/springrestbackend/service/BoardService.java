@@ -14,13 +14,10 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-//    private final ColumnService columnService;
 
     public Board save(Board board, UserEntity user) throws EntityNotFoundException {
-        // new and empty board
         if (board.getId() == null) {
             board = new Board(board.getTitle(), user);
-//            board.setColumns(columnService.createStandardColumns(board));
             board.addAdmin(user);
             board.addMember(user);
 
@@ -34,14 +31,11 @@ public class BoardService {
     }
 
     public void delete(String id){
+        System.out.println("BoardService.delete" + id);
         boardRepository.deleteById(id);
     }
 
     public List<Board> findAll(){
         return boardRepository.findAll();
-    }
-
-    public void update(Board board){
-        boardRepository.save(board);
     }
 }

@@ -63,6 +63,7 @@ public class BoardController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBoard(@PathVariable String id) {
+        System.out.println("deleteBoard");
         boardService.delete(id);
     }
 }

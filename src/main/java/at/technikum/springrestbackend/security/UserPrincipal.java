@@ -1,19 +1,23 @@
 package at.technikum.springrestbackend.security;
 
+import at.technikum.springrestbackend.model.Role;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 
+@Slf4j
 @Getter
 @Builder
 public class UserPrincipal implements UserDetails {
 
     private final String userId;
     private final String email;
+    private final Role role;
     private final Collection<? extends GrantedAuthority> authorities;
 
 
@@ -30,6 +34,11 @@ public class UserPrincipal implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public boolean isAdmin() {
+        System.out.println(role);
+        return role == Role.ADMIN;
     }
 
     @Override

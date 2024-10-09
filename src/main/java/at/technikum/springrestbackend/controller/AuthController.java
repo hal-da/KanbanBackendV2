@@ -41,7 +41,8 @@ public class AuthController {
         }
         String token = jwtIssuer.issueToken(
                 user.getId(),
-                loginDto.getEmail()
+                loginDto.getEmail(),
+                user.getRole()
         );
         return LoginResponseDto.builder().token(token).build();
     }
@@ -50,7 +51,6 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public PublicUserDto register(@RequestBody @Valid RegisterDto registerDto)
             throws EmailExistsException, PasswordsNotSimilarException {
-        System.out.println("register XXXXXXXXXXXXX");
         if(!registerDto.getPassword1().equals(registerDto.getPassword2())){
             throw new PasswordsNotSimilarException("Passwords are not similar");
         }
@@ -63,8 +63,6 @@ public class AuthController {
 
     @GetMapping("/whoami")
     public PublicUserDto whoAmI(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        System.out.println(userPrincipal.getEmail());
-        System.out.println("who am i XXXXXXXXXXXXX");
         UserEntity user = userService.findByEmail(userPrincipal.getEmail());
         return publicUserMapper.toPublicUserDto(user);
     }
