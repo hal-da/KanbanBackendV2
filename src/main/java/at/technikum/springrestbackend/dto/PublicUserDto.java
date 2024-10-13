@@ -8,10 +8,12 @@ import lombok.Setter;
 public class PublicUserDto {
     private String id;
     private String userName;
+    private String role;
 
-    public PublicUserDto(String id, String userName) {
+    public PublicUserDto(String id, String userName, String role) {
         this.id = id;
         this.userName = userName;
+        this.role = role;
     }
 
     public PublicUserDto() {

@@ -17,7 +17,8 @@ public class PublicUserMapper {
     public PublicUserDto toPublicUserDto(UserEntity user) {
         return new PublicUserDto(
                 user.getId(),
-                user.getUsername());
+                user.getUsername(),
+                user.getRole().toString());
     }
 
     // maps a list of UserEntity to a list of PublicUserDto

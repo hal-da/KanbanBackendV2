@@ -80,15 +80,4 @@ public class Task extends BaseModel {
         this.lastChangeAt = date;
         this.lastChangeBy = user;
     }
-
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + getId() +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", done=" + done +
-                '}';
-    }
 }
