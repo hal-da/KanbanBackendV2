@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.service;
 
 
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
+import at.technikum.springrestbackend.exception.UserNotEnoughPrivileges;
 import at.technikum.springrestbackend.model.Board;
 import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.repository.BoardRepository;
@@ -20,7 +21,6 @@ public class BoardService {
             board = new Board(board.getTitle(), user);
             board.addAdmin(user);
             board.addMember(user);
-
         }
         boardRepository.save(board);
         return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);
@@ -31,11 +31,21 @@ public class BoardService {
     }
 
     public void delete(String id){
-        System.out.println("BoardService.delete" + id);
         boardRepository.deleteById(id);
     }
 
     public List<Board> findAll(){
         return boardRepository.findAll();
+    }
+
+    public Board update(Board board, UserEntity user) throws EntityNotFoundException {
+        if (board.getId() == null) {
+            throw new EntityNotFoundException();
+        }
+        if(!board.getAdmins().contains(user)){
+            throw new UserNotEnoughPrivileges();
+        }
+        boardRepository.save(board);
+        return boardRepository.findById(board.getId()).orElseThrow(EntityNotFoundException::new);
     }
 }

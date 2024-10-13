@@ -2,7 +2,6 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.dto.UserDto;
 import at.technikum.springrestbackend.mapper.UserMapper;
-import at.technikum.springrestbackend.model.Role;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +23,6 @@ public class AdminController {
 
     @GetMapping("/users")
     public List<UserDto> getUsers(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        Role role = userPrincipal.getRole();
-        System.out.println(role);
-        if(!userPrincipal.isAdmin()){
-            throw new RuntimeException("You are not authorized to access this resource");
-        }
-        return userMapper.toUserDtos(userService.findAll());
+        return userMapper.toUserDtos(userService.findAll(userPrincipal));
     }
-
-
-
 }

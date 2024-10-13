@@ -10,11 +10,8 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class UserEntity {
+public class UserEntity extends BaseModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
     private String username;
     @JsonIgnore
     private String password;
