@@ -10,13 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-enum StandardColumnTypes {
-    BACKLOG,
-    TODO,
-    IN_PROGRESS,
-    DONE
-}
-
 @Service
 public class ColumnService {
 
