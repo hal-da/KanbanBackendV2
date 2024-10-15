@@ -32,7 +32,6 @@ public class BoardController {
 
     @GetMapping()
     public List<PublicBoardDto> getBoards(){
-        System.out.println("getBoards");
         return publicBoardMapper.toPublicBoardDtos(boardService.findAll());
     }
 
@@ -62,7 +61,7 @@ public class BoardController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBoard(@PathVariable String id) {
-        System.out.println("deleteBoard");
+        // TODO implement deleteBoard
         boardService.delete(id);
     }
 }

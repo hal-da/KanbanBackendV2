@@ -17,6 +17,7 @@ public class UserEntity extends BaseModel{
     private String password;
     private String email;
     private Role role;
+    private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -35,6 +36,7 @@ public class UserEntity extends BaseModel{
     private List<Board> memberBoards;
 
     public UserEntity() {
+        this.imageUrl = "https://picsum.photos/200/200";
     }
 
     public UserEntity(String username, String password, String email) {
