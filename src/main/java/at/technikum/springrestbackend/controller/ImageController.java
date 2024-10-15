@@ -1,10 +1,11 @@
 package at.technikum.springrestbackend.controller;
-
-
+import at.technikum.springrestbackend.dto.ImageUrlDto;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.MinioImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,19 +26,23 @@ public class ImageController {
         return "getImages";
     }
 
-    @GetMapping("/{id}")
-    public String getImage(@PathVariable String id) {
-        System.out.println("getImage " +  id);
-        return "getImage";
+    @GetMapping("/{fileName}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String fileName) {
+
+        // Bild als Response zurücksenden
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(minioImageService.getImage(fileName));
     }
 
 
     @PostMapping
-    public String uploadImage(
-            @RequestParam("image") MultipartFile image,
-            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public ImageUrlDto uploadImage(
+            @RequestParam("image") MultipartFile image) throws Exception {
         System.out.println("uploadImage");
-        return "createImage";
+        String imageURl = minioImageService.uploadImage(image);
+        System.out.println("imageURl: " + imageURl);
+        return new ImageUrlDto(imageURl);
     }
 
     @DeleteMapping("/{id}")
