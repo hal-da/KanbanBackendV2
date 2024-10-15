@@ -58,7 +58,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>3.3.1</version>
+            <version>3.3.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
         <dependency>
@@ -72,10 +72,12 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <version>3.3.1</version>
         </dependency>
-
-
-
-
+        <!-- MinIo -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.4.5</version>
+        </dependency>
     </dependencies>
 
     <build>

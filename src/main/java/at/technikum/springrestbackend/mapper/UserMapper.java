@@ -19,7 +19,10 @@ public class UserMapper {
                 user.getId(),
                 user.getEmail(),
                 user.getRole().toString(),
-                user.getUsername());
+                user.getUsername(),
+                user.getImageUrl(),
+                user.getCreatedAt(),
+                user.getLastChangeAt());
     }
 
     // maps a UserDto to a UserEntity
@@ -29,7 +32,8 @@ public class UserMapper {
                 userDto.getId(),
                 userDto.getEmail(),
                 userDto.getUserName(),
-                userDto.getRole());
+                userDto.getRole(),
+                userDto.getImageUrl());
     }
 
     // maps a List of UserEntity to a List of UserDto
