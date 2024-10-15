@@ -18,7 +18,11 @@ public class PublicUserMapper {
         return new PublicUserDto(
                 user.getId(),
                 user.getUsername(),
-                user.getRole().toString());
+                user.getRole().toString(),
+                user.getImageUrl(),
+                user.getCreatedAt(),
+                user.getLastChangeAt());
+
     }
 
     // maps a list of UserEntity to a list of PublicUserDto

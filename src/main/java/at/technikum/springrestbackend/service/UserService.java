@@ -12,9 +12,11 @@ import at.technikum.springrestbackend.security.JWTIssuer;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,7 +44,7 @@ public class UserService {
     public UserEntity findByEmail(String email){
         UserEntity user =  userRepository.findByEmail(email);
         if(user == null){
-            throw new RuntimeException("User with email " + email + " not found");
+            throw new UsernameNotFoundException("User with email " + email + " not found");
         }
         return user;
     }
@@ -62,7 +64,7 @@ public class UserService {
 
     public List<UserEntity> findAll(UserPrincipal userPrincipal) {
         if(!userPrincipal.isAdmin()){
-            throw new RuntimeException("You are not authorized to access this resource");
+            throw new UserNotEnoughPrivileges("You are not authorized to access this resource");
         }
         return userRepository.findAll();
     }
@@ -84,7 +86,14 @@ public class UserService {
             throw new PasswordsNotSimilarException("Passwords are not similar");
         }
         String encodedPW = passwordEncoder.encode(registerDto.getPassword1());
-        UserEntity user = new UserEntity(registerDto.getUserName(), encodedPW, registerDto.getEmail());
+        Date now = new Date();
+        UserEntity user = new UserEntity.Builder()
+                .withEmail(registerDto.getEmail())
+                .withPassword(encodedPW)
+                .withUsername(registerDto.getUserName())
+                .withCreatedAt(now)
+                .withLastChangeAt(now)
+                .build();
         return register(user);
     }
 }
