@@ -22,6 +22,7 @@ public class IndexController {
         return "Token is valid: " + userPrincipal.getEmail()
                 + " with authorities: " + userPrincipal.getAuthorities()
                 + " userId: " + userPrincipal.getUserId()
-                + " email: " + userPrincipal.getEmail();
+                + " email: " + userPrincipal.getEmail()
+                + " role: " + userPrincipal.getRole();
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class BoardDto {
+public class BoardDto extends BaseModelDto {
     private String id;
     @NotBlank
     private String title;
@@ -18,8 +18,7 @@ public class BoardDto {
     private List<PublicUserDto> members;
     private List<PublicUserDto> admins;
     
-    private Date createdAt;
-    private Date lastChangeAt;
+
 
 
     public BoardDto(
@@ -29,14 +28,16 @@ public class BoardDto {
             List<PublicUserDto> members,
             List<PublicUserDto> admins,
             Date createdAt,
-            Date lastChangeAt) {
+            Date lastChangeAt,
+            PublicUserDto createdBy,
+            PublicUserDto lastChangeBy) {
+
+        super(createdAt, lastChangeAt, createdBy, lastChangeBy);
         this.id = id;
         this.title = title;
         this.columns = columns;
         this.members = members;
         this.admins = admins;
-        this.createdAt = createdAt;
-        this.lastChangeAt = lastChangeAt;
     }
 
     public BoardDto() {

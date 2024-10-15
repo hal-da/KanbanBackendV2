@@ -16,6 +16,7 @@ enum StandardColumnTypes {
     IN_PROGRESS,
     DONE
 }
+
 @Service
 public class ColumnService {
 
@@ -29,7 +30,17 @@ public class ColumnService {
         ArrayList<Column> columns = new ArrayList<>();
 
         for (StandardColumnTypes type : StandardColumnTypes.values()) {
-            columns.add(new Column(type.toString(), board, type.ordinal()));
+            columns.add(new Column(
+                    type.toString(),
+                    board,
+                    type.ordinal(),
+                    new ArrayList<>(),
+                    2,
+                    board.getCreatedAt(),
+                    board.getCreatedAt(),
+                    board.getCreatedBy(),
+                    board.getLastChangeBy()
+            ));
         }
         return columns;
     }
@@ -39,9 +50,6 @@ public class ColumnService {
     }
 
     public Column save(Column column) {
-        if(column.getId() == null) {
-            column = new Column(column);
-        }
         columnRepository.save(column);
         return columnRepository.findById(column.getId()).orElseThrow(EntityNotFoundException::new);
     }
@@ -54,6 +62,8 @@ public class ColumnService {
         Column column = columnRepository.findById(columnDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
         column.setTitle(columnDto.getTitle());
+        column.setOrder(columnDto.getOrder());
+        column.setWipLimit(columnDto.getWipLimit());
         // Tasks will follow
         columnRepository.save(column);
         return columnRepository.findById(column.getId()).orElseThrow(EntityNotFoundException::new);

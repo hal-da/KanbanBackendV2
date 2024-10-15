@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class TaskService {
     }
 
     public Task save(Task task){
+        task.setLastChangeAt(new Date());
         Task t = taskRepository.save(task);
         return taskRepository.findById(t.getId()).orElseThrow(EntityNotFoundException::new);
     }

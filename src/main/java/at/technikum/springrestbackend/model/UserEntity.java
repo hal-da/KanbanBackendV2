@@ -10,15 +10,13 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class UserEntity {
+public class UserEntity extends BaseModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
     private String username;
     @JsonIgnore
     private String password;
     private String email;
+    private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -45,7 +43,16 @@ public class UserEntity {
         this.email = email;
         this.adminBoards = new ArrayList<>();
         this.memberBoards = new ArrayList<>();
+        this.role = Role.MEMBER;
     }
+
+    public UserEntity(String id, String email, String userName, String role) {
+        this.id = id;
+        this.email = email;
+        this.username = userName;
+        this.role = Role.valueOf(role);
+    }
+
 
     public void addAdminBoard(Board board) {
         this.adminBoards.add(board);
