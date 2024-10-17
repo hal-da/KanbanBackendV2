@@ -37,7 +37,7 @@ public class UserEntity extends BaseModel{
     private List<Board> memberBoards;
 
     public UserEntity() {
-        this.imageUrl = "https://picsum.photos/200/200";
+        this.imageUrl = "";
     }
 
     public UserEntity(String username, String password, String email) {
@@ -98,7 +98,7 @@ public class UserEntity extends BaseModel{
         private Date lastChangeAt;
 
         public Builder() {
-            this.imageUrl = "https://picsum.photos/200/200";
+            this.imageUrl = "";
             this.adminBoards = new ArrayList<>();
             this.memberBoards = new ArrayList<>();
             this.role = Role.MEMBER;

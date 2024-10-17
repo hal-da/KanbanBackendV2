@@ -96,4 +96,12 @@ public class UserService {
                 .build();
         return register(user);
     }
+
+    public void addUserImageUrlToUser(String imageUrl, String userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
+        user.setImageUrl(imageUrl);
+        System.out.println("User image url in userService " + user.getImageUrl());
+        userRepository.save(user);
+
+    }
 }

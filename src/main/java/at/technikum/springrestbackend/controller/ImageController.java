@@ -2,8 +2,8 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.dto.ImageUrlDto;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.MinioImageService;
+import at.technikum.springrestbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,9 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/images")
 public class ImageController {
 
-    @Value("${minio.bucket-name}")
-    private String imageBucketName;
     private final MinioImageService minioImageService;
+    private final UserService userService;
 
     @GetMapping
     public String getImages() {
@@ -38,10 +37,15 @@ public class ImageController {
 
     @PostMapping
     public ImageUrlDto uploadImage(
-            @RequestParam("image") MultipartFile image) throws Exception {
+            @RequestParam("image") MultipartFile image,
+            @AuthenticationPrincipal UserPrincipal userPrincipal) throws Exception {
         System.out.println("uploadImage");
         String imageURl = minioImageService.uploadImage(image);
         System.out.println("imageURl: " + imageURl);
+        String userId = userPrincipal.getUserId();
+        System.out.println("userId: " + userId);
+        userService.addUserImageUrlToUser(imageURl, userId);
+        System.out.println("image added to user");
         return new ImageUrlDto(imageURl);
     }
 
