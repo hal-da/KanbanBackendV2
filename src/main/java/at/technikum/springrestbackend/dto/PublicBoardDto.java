@@ -21,6 +21,8 @@ public class PublicBoardDto {
     private PublicUserDto createdBy;
     private PublicUserDto lastChangeBy;
 
+    public PublicBoardDto(){}
+
     public PublicBoardDto(
             String id,
             String title,
