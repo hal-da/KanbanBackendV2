@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -17,6 +18,8 @@ public class UserEntity extends BaseModel{
     private String password;
     private String email;
     private Role role;
+    private String imageUrl;
+    private String cca3;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -35,6 +38,7 @@ public class UserEntity extends BaseModel{
     private List<Board> memberBoards;
 
     public UserEntity() {
+        this.imageUrl = "";
     }
 
     public UserEntity(String username, String password, String email) {
@@ -46,11 +50,16 @@ public class UserEntity extends BaseModel{
         this.role = Role.MEMBER;
     }
 
-    public UserEntity(String id, String email, String userName, String role) {
+    public UserEntity(String id, String email, String userName, String role, String imageUrl) {
         this.id = id;
         this.email = email;
         this.username = userName;
         this.role = Role.valueOf(role);
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isAdmin(){
+        return this.role == Role.ADMIN;
     }
 
 
@@ -78,5 +87,99 @@ public class UserEntity extends BaseModel{
                 "email=" + email + ", " +
                 "adminBoards=" + adminBoards + ", " +
                 "memberBoards=" + memberBoards + "]";
+    }
+
+    // create Builder
+
+    public static class Builder {
+        private String id;
+        private String username;
+        private String password;
+        private String email;
+        private Role role;
+        private String imageUrl;
+        private List<Board> adminBoards;
+        private List<Board> memberBoards;
+        private Date createdAt;
+        private Date lastChangeAt;
+        private String cca3;
+
+        public Builder() {
+            this.imageUrl = "";
+            this.adminBoards = new ArrayList<>();
+            this.memberBoards = new ArrayList<>();
+            this.role = Role.MEMBER;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withCca3(String cca3) {
+            System.out.println("Setting cca3 to: " + cca3);
+            this.cca3 = cca3;
+            return this;
+        }
+
+        public Builder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder withRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Builder withAdminBoards(List<Board> adminBoards) {
+            this.adminBoards = adminBoards;
+            return this;
+        }
+
+        public Builder withMemberBoards(List<Board> memberBoards) {
+            this.memberBoards = memberBoards;
+            return this;
+        }
+
+        public Builder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder withLastChangeAt(Date lastChangeAt) {
+            this.lastChangeAt = lastChangeAt;
+            return this;
+        }
+
+        public UserEntity build() {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setUsername(this.username);
+            userEntity.setPassword(this.password);
+            userEntity.setEmail(this.email);
+            userEntity.setRole(this.role);
+            userEntity.setImageUrl(this.imageUrl);
+            userEntity.setAdminBoards(this.adminBoards);
+            userEntity.setMemberBoards(this.memberBoards);
+            userEntity.setCreatedAt(this.createdAt);
+            userEntity.setLastChangeAt(this.lastChangeAt);
+            userEntity.setCca3(this.cca3);
+            return userEntity;
+        }
     }
 }
