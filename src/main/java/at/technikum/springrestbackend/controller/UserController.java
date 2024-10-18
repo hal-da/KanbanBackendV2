@@ -1,6 +1,7 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.dto.PublicUserDto;
+import at.technikum.springrestbackend.dto.UpdateUserDto;
 import at.technikum.springrestbackend.dto.UserDto;
 import at.technikum.springrestbackend.mapper.PublicUserMapper;
 import at.technikum.springrestbackend.mapper.UserMapper;
@@ -42,7 +43,15 @@ public class UserController {
 
     @GetMapping("/{email}")
     public PublicUserDto getUserByEmail(@PathVariable String email){
-        System.out.println(email);
         return publicUserMapper.toPublicUserDto(userService.findByEmail(email));
+    }
+
+    @PutMapping("/{id}")
+    public UserDto updateUser(
+            @PathVariable String id,
+            @RequestBody UpdateUserDto updateUserDto,
+            @AuthenticationPrincipal UserPrincipal userPrincipal){
+        UserEntity requestUser = userService.findByEmail(userPrincipal.getEmail());
+        return userMapper.toUserDto(userService.update(id, updateUserDto, requestUser));
     }
 }
