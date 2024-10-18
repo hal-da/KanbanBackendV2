@@ -19,6 +19,7 @@ public class UserEntity extends BaseModel{
     private String email;
     private Role role;
     private String imageUrl;
+    private String cca3;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -57,6 +58,10 @@ public class UserEntity extends BaseModel{
         this.imageUrl = imageUrl;
     }
 
+    public boolean isAdmin(){
+        return this.role == Role.ADMIN;
+    }
+
 
     public void addAdminBoard(Board board) {
         this.adminBoards.add(board);
@@ -87,6 +92,7 @@ public class UserEntity extends BaseModel{
     // create Builder
 
     public static class Builder {
+        private String id;
         private String username;
         private String password;
         private String email;
@@ -96,12 +102,24 @@ public class UserEntity extends BaseModel{
         private List<Board> memberBoards;
         private Date createdAt;
         private Date lastChangeAt;
+        private String cca3;
 
         public Builder() {
             this.imageUrl = "";
             this.adminBoards = new ArrayList<>();
             this.memberBoards = new ArrayList<>();
             this.role = Role.MEMBER;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withCca3(String cca3) {
+            System.out.println("Setting cca3 to: " + cca3);
+            this.cca3 = cca3;
+            return this;
         }
 
         public Builder withUsername(String username) {
@@ -160,6 +178,7 @@ public class UserEntity extends BaseModel{
             userEntity.setMemberBoards(this.memberBoards);
             userEntity.setCreatedAt(this.createdAt);
             userEntity.setLastChangeAt(this.lastChangeAt);
+            userEntity.setCca3(this.cca3);
             return userEntity;
         }
     }

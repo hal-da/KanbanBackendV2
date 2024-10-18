@@ -22,18 +22,27 @@ public class UserMapper {
                 user.getUsername(),
                 user.getImageUrl(),
                 user.getCreatedAt(),
-                user.getLastChangeAt());
+                user.getLastChangeAt(),
+                user.getCca3());
     }
 
     // maps a UserDto to a UserEntity
     public UserEntity toUserEntity(UserDto userDto) {
 
-        return new UserEntity(
-                userDto.getId(),
-                userDto.getEmail(),
-                userDto.getUserName(),
-                userDto.getRole(),
-                userDto.getImageUrl());
+        return new UserEntity.Builder()
+                .withId(userDto.getId())
+                .withEmail(userDto.getEmail())
+                .withUsername(userDto.getUserName())
+                .withImageUrl(userDto.getImageUrl())
+                .withCca3(userDto.getCca3())
+                .build();
+
+//        return new UserEntity(
+//                userDto.getId(),
+//                userDto.getEmail(),
+//                userDto.getUserName(),
+//                userDto.getRole(),
+//                userDto.getImageUrl());
     }
 
     // maps a List of UserEntity to a List of UserDto
