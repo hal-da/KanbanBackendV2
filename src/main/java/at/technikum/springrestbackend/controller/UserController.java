@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping("/{id}/details")
     public UserDto getUser(@PathVariable String id,
                            @AuthenticationPrincipal UserPrincipal userPrincipal){
-        UserEntity requestUser = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity requestUser = userService.findById(userPrincipal.getUserId());
         return userMapper.toUserDto(userService.findById(id, requestUser));
     }
 
@@ -51,7 +51,7 @@ public class UserController {
             @PathVariable String id,
             @RequestBody UpdateUserDto updateUserDto,
             @AuthenticationPrincipal UserPrincipal userPrincipal){
-        UserEntity requestUser = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity requestUser = userService.findById(userPrincipal.getUserId());
         return userMapper.toUserDto(userService.update(id, updateUserDto, requestUser));
     }
 }
