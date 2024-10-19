@@ -79,10 +79,11 @@ public class Board extends BaseModel {
     }
 
     public Column addColumn(String title) {
+        int lastIndex = this.columns.size() -1;
         Column column = new Column(
                 title,
                 this,
-                this.columns.getLast().getOrder() + 1,
+                this.columns.get(lastIndex).getOrder() +1,
                 2
                 );
         this.columns.add(column);
