@@ -28,7 +28,7 @@ public class UserController {
         return publicUserMapper.toPublicUserDtos(userService.findAll());
     }
 
-    @GetMapping("/{id}/details")
+    @GetMapping("/{id}")
     public UserDto getUser(@PathVariable String id,
                            @AuthenticationPrincipal UserPrincipal userPrincipal){
         UserEntity requestUser = userService.findById(userPrincipal.getUserId());
@@ -39,11 +39,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable String id){
         userService.delete(id);
-    }
-
-    @GetMapping("/{email}")
-    public PublicUserDto getUserByEmail(@PathVariable String email){
-        return publicUserMapper.toPublicUserDto(userService.findByEmail(email));
     }
 
     @PutMapping("/{id}")

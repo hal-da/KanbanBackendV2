@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public UserEntity findById(String id, UserEntity user) {
-        if (!user.getId().equals(id)) {
+        if (!user.getId().equals(id) && !user.isAdmin()) {
             throw new UserNotEnoughPrivileges("You are not authorized to access this resource");
         }
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found"));
@@ -106,6 +106,13 @@ public class UserService {
         if (!id.equals(requestUser.getId()) && !requestUser.isAdmin()) {
             throw new UserNotEnoughPrivileges("You are not authorized to access this resource");
         }
+
+        UserEntity userWithSameEmail = userRepository.findByEmail(updateUserDto.getEmail());
+        if (userWithSameEmail != null && !userWithSameEmail.getId().equals(id)) {
+            throw new EmailExistsException("User with email " + updateUserDto.getEmail() + " already exists");
+        }
+
+
         UserEntity userToChange = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
         userToChange.setLastChangeAt(new Date());

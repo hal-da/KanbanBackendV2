@@ -37,16 +37,8 @@ public class ImageController {
 
     @PostMapping
     public ImageUrlDto uploadImage(
-            @RequestParam("image") MultipartFile image,
-            @AuthenticationPrincipal UserPrincipal userPrincipal) throws Exception {
-        System.out.println("uploadImage");
-        String imageURl = minioImageService.uploadImage(image);
-        System.out.println("imageURl: " + imageURl);
-        String userId = userPrincipal.getUserId();
-        System.out.println("userId: " + userId);
-        userService.addUserImageUrlToUser(imageURl, userId);
-        System.out.println("image added to user");
-        return new ImageUrlDto(imageURl);
+            @RequestParam("image") MultipartFile image) throws Exception {
+        return new ImageUrlDto(minioImageService.uploadImage(image));
     }
 
     @DeleteMapping("/{id}")
