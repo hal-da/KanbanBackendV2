@@ -41,7 +41,7 @@ public class BoardController {
             @RequestBody @Valid BoardDto boardDto,
             @AuthenticationPrincipal UserPrincipal userPrincipal)
             throws EntityNotFoundException {
-        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity user = userService.findById(userPrincipal.getUserId());
         return boardMapper.toDto(boardService.save(boardMapper.toBoard(boardDto, user), user));
     }
 
@@ -54,7 +54,7 @@ public class BoardController {
     public BoardDto updateBoard(@RequestBody @Valid BoardDto boardDto,
                                 @AuthenticationPrincipal UserPrincipal userPrincipal)
             throws EntityNotFoundException {
-        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity user = userService.findById(userPrincipal.getUserId());
         return boardMapper.toDto(boardService.update(boardMapper.toBoard(boardDto, user), user));
     }
 
