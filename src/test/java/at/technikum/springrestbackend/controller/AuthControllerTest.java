@@ -1,4 +1,4 @@
-/*
+
 package at.technikum.springrestbackend.controller;
 
 
@@ -65,7 +65,7 @@ class AuthControllerTest {
 
     @Test
     void testLoginSuccess() throws Exception {
-        LoginRequestDto loginDto = new LoginRequestDto("user@example.com", "password");
+
         UserEntity user = new UserEntity("username", "encodedPassword", "user@example.com");
         user.setId("user-id");
         String token = "jwt-token";
@@ -83,7 +83,6 @@ class AuthControllerTest {
 
     @Test
     void testLoginFailure() throws Exception {
-        LoginRequestDto loginDto = new LoginRequestDto("user@example.com", "password");
         UserEntity user = new UserEntity("username", "encodedPassword", "user@example.com");
 
         when(userService.findByEmail(anyString())).thenReturn(user);
@@ -98,13 +97,12 @@ class AuthControllerTest {
 
     @Test
     void testRegisterSuccess() throws Exception {
-        RegisterDto registerDto = new RegisterDto("username", "password1", "password1", "user@example.com");
         UserEntity user = new UserEntity("username", "encodedPassword", "user@example.com");
         user.setId("user-id");
         PublicUserDto publicUserDto = new PublicUserDto("user-id", "username");
 
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
-        when(userService.register(any(UserEntity.class))).thenReturn(user);
+        when(userService.registerUser(any(UserEntity.class))).thenReturn(user);
         when(publicUserMapper.toPublicUserDto(any(UserEntity.class))).thenReturn(publicUserDto);
 
         mockMvc.perform(post("/register")
@@ -127,4 +125,4 @@ class AuthControllerTest {
     }
 }
 
- */
+
