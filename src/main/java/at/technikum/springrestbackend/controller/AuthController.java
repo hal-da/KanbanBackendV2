@@ -44,7 +44,7 @@ public class AuthController {
 
     @GetMapping("/whoami")
     public PublicUserDto whoAmI(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        UserEntity user = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity user = userService.findById(userPrincipal.getUserId());
         return publicUserMapper.toPublicUserDto(user);
     }
 }
