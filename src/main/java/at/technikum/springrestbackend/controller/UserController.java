@@ -28,10 +28,10 @@ public class UserController {
         return publicUserMapper.toPublicUserDtos(userService.findAll());
     }
 
-    @GetMapping("/{id}/details")
+    @GetMapping("/{id}")
     public UserDto getUser(@PathVariable String id,
                            @AuthenticationPrincipal UserPrincipal userPrincipal){
-        UserEntity requestUser = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity requestUser = userService.findById(userPrincipal.getUserId());
         return userMapper.toUserDto(userService.findById(id, requestUser));
     }
 
@@ -41,17 +41,12 @@ public class UserController {
         userService.delete(id);
     }
 
-    @GetMapping("/{email}")
-    public PublicUserDto getUserByEmail(@PathVariable String email){
-        return publicUserMapper.toPublicUserDto(userService.findByEmail(email));
-    }
-
     @PutMapping("/{id}")
     public UserDto updateUser(
             @PathVariable String id,
             @RequestBody UpdateUserDto updateUserDto,
             @AuthenticationPrincipal UserPrincipal userPrincipal){
-        UserEntity requestUser = userService.findByEmail(userPrincipal.getEmail());
+        UserEntity requestUser = userService.findById(userPrincipal.getUserId());
         return userMapper.toUserDto(userService.update(id, updateUserDto, requestUser));
     }
 }
