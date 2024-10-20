@@ -21,9 +21,22 @@ public class AdminService {
             UserEntity admin = new UserEntity();
             admin.setUsername("admin");
             admin.setEmail("admin@admin");
+            admin.setCca3("BAN");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
+        }
+    }
+
+    public void createSYSTEMIfNotExists() {
+        if (!userRepository.existsByUsername("SYSTEM")) {
+            UserEntity system = new UserEntity();
+            system.setUsername("SYSTEM");
+            system.setEmail("SYSTEM@SYSTEM");
+            system.setCca3("BAN");
+            system.setRole(Role.ADMIN);
+            system.setId("SYSTEM");
+            userRepository.save(system);
         }
     }
 

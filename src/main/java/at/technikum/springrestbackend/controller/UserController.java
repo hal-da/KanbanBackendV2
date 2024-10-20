@@ -3,17 +3,22 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.dto.PublicUserDto;
 import at.technikum.springrestbackend.dto.UpdateUserDto;
 import at.technikum.springrestbackend.dto.UserDto;
+import at.technikum.springrestbackend.exception.EntityNotFoundException;
+import at.technikum.springrestbackend.exception.UserNotEnoughPrivileges;
 import at.technikum.springrestbackend.mapper.PublicUserMapper;
 import at.technikum.springrestbackend.mapper.UserMapper;
 import at.technikum.springrestbackend.model.UserEntity;
 import at.technikum.springrestbackend.security.UserPrincipal;
 import at.technikum.springrestbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -30,15 +35,19 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable String id,
-                           @AuthenticationPrincipal UserPrincipal userPrincipal){
+                           @AuthenticationPrincipal UserPrincipal userPrincipal)
+        throws UserNotEnoughPrivileges, EntityNotFoundException {
         UserEntity requestUser = userService.findById(userPrincipal.getUserId());
         return userMapper.toUserDto(userService.findById(id, requestUser));
     }
 
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id){
-        userService.delete(id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(
+            @PathVariable String id,
+            @AuthenticationPrincipal UserPrincipal userPrincipal){
+        userService.delete(id, userPrincipal );
     }
 
     @PutMapping("/{id}")
