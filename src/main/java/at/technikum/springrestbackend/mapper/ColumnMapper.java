@@ -21,7 +21,6 @@ public class ColumnMapper {
     public Column toColumn(ColumnDto columnDto, UserEntity user) {
 
         if(columnDto.getId() == null) {
-            System.out.println("createNewColumn");
             return createNewColumn(columnDto, user);
         }
 
@@ -43,7 +42,6 @@ public class ColumnMapper {
     }
 
     private Column createNewColumn(ColumnDto columnDto, UserEntity user) {
-        System.out.println("createNewColumn method" +  user.getId());
         Column column = new Column();
         column.setTitle(columnDto.getTitle());
         column.setOrder(columnDto.getOrder());
@@ -53,7 +51,6 @@ public class ColumnMapper {
         column.setCreatedBy(user);
         column.setLastChangeBy(user);
         column.setTasks(new ArrayList<>());
-        System.out.println("createNewColumn method created by " +  column.getCreatedBy().getId());
         return column;
     }
 

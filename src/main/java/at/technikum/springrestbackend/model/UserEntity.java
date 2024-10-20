@@ -100,6 +100,8 @@ public class UserEntity extends BaseModel{
         private String imageUrl;
         private List<Board> adminBoards;
         private List<Board> memberBoards;
+        private UserEntity createdBy;
+        private UserEntity lastChangeBy;
         private Date createdAt;
         private Date lastChangeAt;
         private String cca3;
@@ -111,13 +113,22 @@ public class UserEntity extends BaseModel{
             this.role = Role.MEMBER;
         }
 
+        public Builder withCreatedBy(UserEntity createdBy) {
+            this.createdBy = createdBy;
+            return this;
+        }
+
+        public Builder withLastChangeBy(UserEntity lastChangeBy) {
+            this.lastChangeBy = lastChangeBy;
+            return this;
+        }
+
         public Builder withId(String id) {
             this.id = id;
             return this;
         }
 
         public Builder withCca3(String cca3) {
-            System.out.println("Setting cca3 to: " + cca3);
             this.cca3 = cca3;
             return this;
         }

@@ -4,6 +4,7 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.dto.BoardDto;
 import at.technikum.springrestbackend.dto.PublicBoardDto;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
+import at.technikum.springrestbackend.exception.UserNotEnoughPrivileges;
 import at.technikum.springrestbackend.mapper.BoardMapper;
 import at.technikum.springrestbackend.mapper.PublicBoardMapper;
 import at.technikum.springrestbackend.model.UserEntity;
@@ -60,8 +61,9 @@ public class BoardController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBoard(@PathVariable String id) {
+    public void deleteBoard(@PathVariable String id, @AuthenticationPrincipal UserPrincipal userPrincipal)
+            throws EntityNotFoundException, UserNotEnoughPrivileges {
         // TODO implement deleteBoard
-        boardService.delete(id);
+        boardService.delete(id, userPrincipal);
     }
 }
