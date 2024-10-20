@@ -49,8 +49,6 @@ public class BoardMapper {
 
     public BoardDto toDto(Board board) {
 
-        System.out.println("board im mapper: " + board.getTitle());
-
         List<ColumnDto> columnDtos = columnMapper.toDtos(board.getColumns());
         List<PublicUserDto> members = publicUserMapper.toPublicUserDtos(board.getMembers());
         List<PublicUserDto> admins = publicUserMapper.toPublicUserDtos(board.getAdmins());

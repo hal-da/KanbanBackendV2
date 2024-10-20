@@ -25,7 +25,6 @@ public class PublicUserDto extends BaseModelDto {
             Date lastChangeAt,
             String cca3
     ) {
-        System.out.println("PublicUserDto constructor, cca: " + cca3);
         this.id = id;
         this.userName = userName;
         this.role = role;

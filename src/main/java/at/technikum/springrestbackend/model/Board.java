@@ -89,6 +89,7 @@ public class Board extends BaseModel {
         return column;
     }
 
+
     public void addMember(UserEntity user) {
         this.members.add(user);
     }
