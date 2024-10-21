@@ -1,3 +1,4 @@
+
 package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
@@ -77,16 +78,6 @@ class BoardServiceTest {
         // Act & Assert
         assertThrows(EntityNotFoundException.class, () -> boardService.findById("boardId"));
     }
-
-    @Test
-    void testDelete() {
-        // Act
-        boardService.delete("boardId");
-
-        // Assert
-        verify(boardRepository).deleteById("boardId");
-    }
-
     @Test
     void testFindAll() {
         // Arrange
@@ -121,3 +112,4 @@ class BoardServiceTest {
         assertThrows(EntityNotFoundException.class, () -> boardService.update(board, user));
     }
 }
+

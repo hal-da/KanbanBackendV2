@@ -1,3 +1,4 @@
+
 package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.dto.LoginRequestDto;
@@ -145,37 +146,6 @@ class UserServiceTest {
         assertThrows(PasswordOrEmailWrongException.class, () -> userService.loginUser(loginDto, user));
         verify(passwordEncoder, times(1)).matches(loginDto.getPassword(), user.getPassword());
     }
-
-   /* @Test
-    void testUpdate_Success() {
-        // Arrange
-        String userId = "123";
-        UpdateUserDto updateUserDto = new UpdateUserDto();
-        updateUserDto.setEmail("updated@example.com");
-        updateUserDto.setUserName("UpdatedUser");
-        updateUserDto.setCca3("USA");
-
-        UserEntity requestUser = new UserEntity();
-        requestUser.setId(userId);
-        requestUser.setAdmin(true);
-
-        UserEntity existingUser = new UserEntity();
-        existingUser.setId(userId);
-
-        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(existingUser)).thenReturn(existingUser);
-
-        // Act
-        UserEntity result = userService.update(userId, updateUserDto, requestUser);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals("updated@example.com", result.getEmail());
-        assertEquals("UpdatedUser", result.getUsername());
-        verify(userRepository, times(1)).findById(userId);
-        verify(userRepository, times(1)).save(existingUser);
-    }*/
-
     @Test
     void testFindAll_Success() {
         // Arrange
@@ -192,4 +162,5 @@ class UserServiceTest {
         verify(userRepository, times(1)).findAll();
     }
 }
+
 
