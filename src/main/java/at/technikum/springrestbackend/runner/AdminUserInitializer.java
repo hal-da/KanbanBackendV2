@@ -13,8 +13,8 @@ public class AdminUserInitializer implements CommandLineRunner {
     private AdminService adminService;
 
     @Override
-    public void run(String... args) throws Exception {
-        System.out.println("Creating admin user if not exists");
+    public void run(String... args) {
+        adminService.createSYSTEMIfNotExists();
         adminService.createAdminIfNotExists();
     }
 }

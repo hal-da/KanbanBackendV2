@@ -5,7 +5,9 @@ import at.technikum.springrestbackend.dto.LoginResponseDto;
 import at.technikum.springrestbackend.dto.RegisterDto;
 import at.technikum.springrestbackend.dto.UpdateUserDto;
 import at.technikum.springrestbackend.exception.*;
+import at.technikum.springrestbackend.model.Board;
 import at.technikum.springrestbackend.model.UserEntity;
+import at.technikum.springrestbackend.repository.BoardRepository;
 import at.technikum.springrestbackend.repository.UserRepository;
 import at.technikum.springrestbackend.security.JWTIssuer;
 import at.technikum.springrestbackend.security.UserPrincipal;
@@ -25,8 +27,30 @@ public class UserService {
     private final JWTIssuer jwtIssuer;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BoardService boardService;
+    private final BoardRepository boardRepository;
 
-    public void delete(String id) {
+    public void delete(String id, UserPrincipal userPrincipal)
+            throws EntityNotFoundException, UserNotEnoughPrivileges {
+        if (!userPrincipal.isAdmin()) {
+            throw new UserNotEnoughPrivileges("You are not authorized to access this resource");
+        }
+        UserEntity userToBeDeleted = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User with id " + id + " not found"));
+        List<Board> boards = boardService.findAllByUserId(id);
+        for (Board board : boards) {
+            userToBeDeleted.removeAdminBoard(board);
+            userToBeDeleted.removeMemberBoard(board);
+            board.removeAdmin(userToBeDeleted);
+            board.removeMember(userToBeDeleted);
+            userRepository.save(userToBeDeleted);
+            if(board.getAdmins().isEmpty()){
+                boardRepository.delete(board);
+            } else {
+                UserEntity system = userRepository.findByEmail("SYSTEM@SYSTEM");
+                boardService.save(board, system);
+            }
+        }
         userRepository.deleteById(id);
     }
 
@@ -50,14 +74,15 @@ public class UserService {
     }
 
     public List<UserEntity> findAll() {
-        return userRepository.findAll();
+        // dont send user with id SYSTEM
+        return userRepository.findAll().stream().filter(user -> !user.getUsername().equals("SYSTEM")).toList();
     }
 
     public List<UserEntity> findAll(UserPrincipal userPrincipal) {
         if (!userPrincipal.isAdmin()) {
             throw new UserNotEnoughPrivileges("You are not authorized to access this resource");
         }
-        return userRepository.findAll();
+        return userRepository.findAll().stream().filter(user -> !user.getUsername().equals("SYSTEM")).toList();
     }
 
     public LoginResponseDto loginUser(@Valid LoginRequestDto loginDto, UserEntity user) {
@@ -78,28 +103,20 @@ public class UserService {
         }
         String encodedPW = passwordEncoder.encode(registerDto.getPassword1());
         Date now = new Date();
-        System.out.println("Registering user with cca3 UserService " + registerDto.getCca3());
+        UserEntity system = userRepository.findByEmail("SYSTEM@SYSTEM");
         UserEntity user = new UserEntity
                 .Builder()
                 .withEmail(registerDto.getEmail())
                 .withPassword(encodedPW)
                 .withUsername(registerDto.getUserName())
                 .withCreatedAt(now)
+                .withCreatedBy(system)
+                .withLastChangeBy(system)
                 .withLastChangeAt(now)
                 .withCca3(registerDto.getCca3())
                 .build();
 
-        System.out.println("Registered user with cca3 UserService " + user.getCca3());
         return userRepository.save(user);
-    }
-
-    public void addUserImageUrlToUser(String imageUrl, String userId) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
-        user.setImageUrl(imageUrl);
-        System.out.println("User image url in userService " + user.getImageUrl());
-        userRepository.save(user);
-
     }
 
     public UserEntity update(String id, UpdateUserDto updateUserDto, UserEntity requestUser) {
@@ -123,5 +140,9 @@ public class UserService {
         userToChange.setCca3(updateUserDto.getCca3());
 
         return userRepository.save(userToChange);
+    }
+
+    public UserEntity save(UserEntity user) {
+        return userRepository.save(user);
     }
 }

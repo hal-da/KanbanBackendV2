@@ -32,11 +32,8 @@ public class ColumnController {
 
     @GetMapping
     public List<ColumnDto> getColumns(@PathVariable String boardId) {
-        List<ColumnDto> columnDtos = columnMapper
+        return columnMapper
                 .toDtos(columnService.getColumnsByBoardId(boardId));
-        System.out.println("getColumns");
-        System.out.println(columnDtos);
-        return columnDtos;
     }
 
 
@@ -53,7 +50,6 @@ public class ColumnController {
     public ColumnDto updateColumn(
             @RequestBody @Valid ColumnDto columnDto, @PathVariable String columnId) {
         columnDto.setId(columnId);
-        System.out.println("updateColumn");
         return columnMapper.toDto(columnService.updateColumn(columnDto));
     }
 
@@ -68,20 +64,14 @@ public class ColumnController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable String boardId,
             @RequestBody @Valid ColumnDto columnDto) {
-        System.out.println("createColumn " + columnDto);
         Board board = boardService.findById(boardId);
-        System.out.println("createColumn board id   " + boardId);
         if(!board.idInAdminsOrMembers(userPrincipal.getUserId())){
             throw new RuntimeException("User is not allowed to create a column");
         }
-        System.out.println("get user " + userPrincipal.getUserId());
         UserEntity user = userService.findById(userPrincipal.getUserId());
-        System.out.println("createColumn " + user.getId());
-        System.out.println("userId " + user.getId());
         Column column = columnMapper.toColumn(columnDto, user);
         column.setBoard(board);
         Column c = columnService.save(column);
-        System.out.println("createColumn before seinding ");
         return columnMapper.toDto(c);
     }
 }

@@ -22,8 +22,6 @@ public class MinioImageService {
             @Value("${minio.endpoint}") String endpoint,
             @Value("${minio.access-key}") String accessKey,
             @Value("${minio.secret-key}") String secretKey) {
-
-        System.out.println(bucketName + " " + endpoint + " " + accessKey + " " + secretKey + " ################");
         this.minioClient = MinioClient.builder()
                 .endpoint(endpoint)
                 .credentials(accessKey, secretKey)
@@ -42,9 +40,8 @@ public class MinioImageService {
         }
     }
 
-    public String uploadImage(MultipartFile file) throws Exception {
+    public String uploadImage(MultipartFile file) throws RuntimeException {
         try {
-            System.out.println("image name: " + file.getOriginalFilename());
             String imageId = UUID.randomUUID().toString();
             String fileName = imageId + "-" + file.getOriginalFilename();
             minioClient.putObject(

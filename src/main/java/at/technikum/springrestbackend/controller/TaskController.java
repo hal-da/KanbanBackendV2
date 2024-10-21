@@ -26,10 +26,8 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks(@PathVariable String columnId) {
-        List<TaskDto> taskDtos = taskMapper
+        return taskMapper
                 .toDtos(taskService.getTasksByColumnId(columnId));
-        System.out.println(taskDtos);
-        return taskDtos;
     }
 
     @PostMapping

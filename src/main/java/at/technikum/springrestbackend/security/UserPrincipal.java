@@ -37,7 +37,6 @@ public class UserPrincipal implements UserDetails {
     }
 
     public boolean isAdmin() {
-        System.out.println(role);
         return role == Role.ADMIN;
     }
 
