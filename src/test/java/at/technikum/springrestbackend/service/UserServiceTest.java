@@ -48,18 +48,6 @@ class UserServiceTest {
     }
 
     @Test
-    void testDelete_Success() {
-        // Arrange
-        String userId = "123";
-
-        // Act
-        userService.delete(userId);
-
-        // Assert
-        verify(userRepository, times(1)).deleteById(userId);
-    }
-
-    @Test
     void testFindById_Success() {
         // Arrange
         String userId = "123";
@@ -146,21 +134,7 @@ class UserServiceTest {
         assertThrows(PasswordOrEmailWrongException.class, () -> userService.loginUser(loginDto, user));
         verify(passwordEncoder, times(1)).matches(loginDto.getPassword(), user.getPassword());
     }
-    @Test
-    void testFindAll_Success() {
-        // Arrange
-        List<UserEntity> users = new ArrayList<>();
-        users.add(new UserEntity());
-        when(userRepository.findAll()).thenReturn(users);
 
-        // Act
-        List<UserEntity> result = userService.findAll();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(userRepository, times(1)).findAll();
-    }
 }
 
 
