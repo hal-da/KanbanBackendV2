@@ -78,18 +78,6 @@ public class Board extends BaseModel {
         this.columns.add(column);
     }
 
-    public Column addColumn(String title) {
-        Column column = new Column(
-                title,
-                this,
-                this.columns.getLast().getOrder() + 1,
-                2
-                );
-        this.columns.add(column);
-        return column;
-    }
-
-
     public void addMember(UserEntity user) {
         this.members.add(user);
     }
