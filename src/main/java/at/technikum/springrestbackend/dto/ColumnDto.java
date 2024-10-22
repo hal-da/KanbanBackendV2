@@ -18,8 +18,6 @@ public class ColumnDto  extends BaseModelDto{
     private List<TaskDto> tasks;
     private int wipLimit;
 
-
-
     public ColumnDto(
             String id,
             String title,
@@ -41,12 +39,4 @@ public class ColumnDto  extends BaseModelDto{
     public ColumnDto() {
     }
 
-    @Override
-    public String toString() {
-        return "ColumnDto{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", order=" + order +
-                '}';
-    }
 }

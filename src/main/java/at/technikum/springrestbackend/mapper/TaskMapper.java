@@ -51,7 +51,6 @@ public class TaskMapper {
         PublicUserDto createdBy = publicUserMapper.toPublicUserDto(task.getCreatedBy());
         PublicUserDto lastChangeBy = publicUserMapper.toPublicUserDto(task.getLastChangeBy());
 
-
         return new TaskDto(
                 task.getId(),
                 task.getTitle(),

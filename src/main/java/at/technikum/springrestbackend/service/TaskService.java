@@ -25,6 +25,9 @@ public class TaskService {
     }
 
     public Task save(Task task){
+        if(task.isDone()){
+            throw new RuntimeException("Task is already done");
+        }
         task.setLastChangeAt(new Date());
         Task t = taskRepository.save(task);
         return taskRepository.findById(t.getId()).orElseThrow(EntityNotFoundException::new);
@@ -33,8 +36,4 @@ public class TaskService {
     public List<Task> getTasksByColumnId(String columnId){
         return taskRepository.findByColumnId(columnId);
     }
-
-
-
-
 }

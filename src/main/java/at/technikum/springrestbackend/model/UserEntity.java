@@ -62,15 +62,6 @@ public class UserEntity extends BaseModel{
         return this.role == Role.ADMIN;
     }
 
-
-    public void addAdminBoard(Board board) {
-        this.adminBoards.add(board);
-    }
-
-    public void addMemberBoard(Board board) {
-        this.memberBoards.add(board);
-    }
-
     public void removeAdminBoard(Board board) {
         this.adminBoards.remove(board);
     }

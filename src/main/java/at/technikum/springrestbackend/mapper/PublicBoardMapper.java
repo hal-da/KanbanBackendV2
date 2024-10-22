@@ -22,7 +22,6 @@ public class PublicBoardMapper {
         List<PublicUserDto> members = publicUserMapper.toPublicUserDtos(board.getMembers());
         List<PublicUserDto> admins = publicUserMapper.toPublicUserDtos(board.getAdmins());
 
-
         return new PublicBoardDto(
                 board.getId(),
                 board.getTitle(),

@@ -21,11 +21,4 @@ public class RegisterDto {
     public RegisterDto() {
     }
 
-    public RegisterDto(String email, String password1, String password2, String userName, String cca3) {
-        this.email = email;
-        this.password1 = password1;
-        this.password2 = password2;
-        this.userName = userName;
-        this.cca3 = cca3;
-    }
 }

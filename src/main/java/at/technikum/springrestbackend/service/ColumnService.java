@@ -57,7 +57,6 @@ public class ColumnService {
         column.setTitle(columnDto.getTitle());
         column.setOrder(columnDto.getOrder());
         column.setWipLimit(columnDto.getWipLimit());
-        // Tasks will follow
         columnRepository.save(column);
         return columnRepository.findById(column.getId()).orElseThrow(EntityNotFoundException::new);
     }
