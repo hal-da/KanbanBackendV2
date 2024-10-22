@@ -3,8 +3,6 @@ package at.technikum.springrestbackend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,22 +31,6 @@ public class Column extends BaseModel {
 
 
     public Column() {
-    }
-
-
-
-    public Column(Column column) {
-        this.id = column.getId();
-        this.title = column.getTitle();
-        this.board = column.getBoard();
-        this.order = column.getOrder();
-        this.tasks = column.getTasks();
-        this.wipLimit = column.getWipLimit();
-    }
-
-    public Column(String title) {
-        this.title = title;
-        this.tasks = new ArrayList<>();
     }
 
     public Column(
@@ -91,30 +73,5 @@ public class Column extends BaseModel {
         this.lastChangeAt = lastChangeAt;
         this.createdBy = createdBy;
         this.lastChangeBy = lastChangeBy;
-    }
-
-    public Column(String id, String title, Board board, int order, List<Task> tasks) {
-        this.id = id;
-        this.title = title;
-        this.board = board;
-        this.order = order;
-        this.tasks = tasks;
-    }
-
-    public Column(String string, Board board, int order, int wipLimit) {
-        this.title = string;
-        this.board = board;
-        this.order = order;
-        this.tasks = new ArrayList<>();
-        this.wipLimit = wipLimit;
-    }
-
-    @Override
-    public String toString() {
-        return "Column{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", board=" + board +
-                '}';
     }
 }

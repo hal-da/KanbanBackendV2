@@ -36,13 +36,6 @@ public class UserMapper {
                 .withImageUrl(userDto.getImageUrl())
                 .withCca3(userDto.getCca3())
                 .build();
-
-//        return new UserEntity(
-//                userDto.getId(),
-//                userDto.getEmail(),
-//                userDto.getUserName(),
-//                userDto.getRole(),
-//                userDto.getImageUrl());
     }
 
     // maps a List of UserEntity to a List of UserDto
@@ -54,5 +47,4 @@ public class UserMapper {
     public List<UserEntity> toUserEntities(List<UserDto> userDtos) {
         return userDtos.stream().map(this::toUserEntity).toList();
     }
-
 }

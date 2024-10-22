@@ -73,21 +73,12 @@ public class Board extends BaseModel {
         this.lastChangeBy = user;
     }
 
-
-    public void addColumn(Column column) {
-        this.columns.add(column);
-    }
-
     public void addMember(UserEntity user) {
         this.members.add(user);
     }
 
     public void addAdmin(UserEntity user) {
         this.admins.add(user);
-    }
-
-    public void removeColumn(Column column) {
-        this.columns.remove(column);
     }
 
     public void removeMember(UserEntity user) {

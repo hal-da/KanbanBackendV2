@@ -23,26 +23,6 @@ public class Task extends BaseModel {
     public Task() {
     }
 
-    public Task(Task t){
-        super(t.getId());
-        this.title = t.getTitle();
-        this.description = t.getDescription();
-        this.done = t.isDone();
-        this.column = t.getColumn();
-        this.lastChangeBy = t.getLastChangeBy();
-        this.lastChangeAt = t.getLastChangeAt();
-        this.createdBy = t.getCreatedBy();
-        this.createdAt = t.getCreatedAt();
-    }
-
-    public Task(String id, String title, String description, boolean done, Column column) {
-        super(id);
-        this.title = title;
-        this.description = description;
-        this.done = done;
-        this.column = column;
-    }
-
     /**
      * Constructor for creating a new Task
      * @param title the title of the task

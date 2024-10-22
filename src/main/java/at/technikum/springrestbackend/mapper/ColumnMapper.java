@@ -88,6 +88,4 @@ public class ColumnMapper {
                 .map(columnDto -> toColumn(columnDto, user))
                 .toList();
     }
-
-
 }

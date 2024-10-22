@@ -16,6 +16,7 @@ public abstract class BaseModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     protected String id;
     protected Date createdAt;
+    @Setter
     protected Date lastChangeAt;
     @ManyToOne
     @JoinColumn(name = "created_by_id")
@@ -40,7 +41,4 @@ public abstract class BaseModel {
         this.id = id;
     }
 
-    public void setLastChangeAt(Date lastChangeAt){
-        this.lastChangeAt = lastChangeAt;
-    }
 }

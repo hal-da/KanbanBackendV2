@@ -40,21 +40,6 @@ public class BoardDto extends BaseModelDto {
         this.admins = admins;
     }
 
-    public BoardDto() {
-    }
-
-    public void addColumn(ColumnDto column) {
-        this.columns.add(column);
-    }
-
-    public void removeColumn(ColumnDto column) {
-        this.columns.remove(column);
-    }
-
-    public void addMember(PublicUserDto user) {
-        this.members.add(user);
-    }
-
     @Override
     public String toString() {
         return "BoardDto{" +

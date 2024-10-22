@@ -39,5 +39,4 @@ public class AdminService {
             userRepository.save(system);
         }
     }
-
 }
