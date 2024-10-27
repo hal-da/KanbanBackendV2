@@ -25,7 +25,14 @@ public class TaskService {
     }
 
     public Task save(Task task){
-        if(task.isDone()){
+        if(task.getId() == null){
+            task.setCreatedAt(new Date());
+            task.setLastChangeAt(new Date());
+            return taskRepository.save(task);
+        }
+
+        Task originalTask = taskRepository.findById(task.getId()).orElseThrow(EntityNotFoundException::new);
+        if(originalTask.isDone() && task.isDone()){
             throw new RuntimeException("Task is already done");
         }
         task.setLastChangeAt(new Date());

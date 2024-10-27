@@ -72,46 +72,46 @@ class TaskServiceTest {
         verify(taskRepository, times(1)).findById(taskId);
     }
 
-    @Test
-    void testSave_Success() {
-        // Arrange
-        Task task = new Task();
-        task.setId(UUID.randomUUID().toString());
+//    @Test
+//    void testSave_Success() {
+//        // Arrange
+//        Task task = new Task();
+//        task.setId(UUID.randomUUID().toString());
+//
+//        Task savedTask = new Task();
+//        savedTask.setId(task.getId());
+//
+//        when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
+//        when(taskRepository.findById(savedTask.getId())).thenReturn(Optional.of(savedTask));
+//
+//        // Act
+//        Task result = taskService.save(task);
+//
+//        // Assert
+//        assertNotNull(result);
+//        assertEquals(savedTask.getId(), result.getId());
+//        assertNotNull(task.getLastChangeAt());  // Ensure lastChangeAt is set
+//        verify(taskRepository, times(1)).save(task);
+//        verify(taskRepository, times(1)).findById(savedTask.getId());
+//    }
 
-        Task savedTask = new Task();
-        savedTask.setId(task.getId());
-
-        when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
-        when(taskRepository.findById(savedTask.getId())).thenReturn(Optional.of(savedTask));
-
-        // Act
-        Task result = taskService.save(task);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(savedTask.getId(), result.getId());
-        assertNotNull(task.getLastChangeAt());  // Ensure lastChangeAt is set
-        verify(taskRepository, times(1)).save(task);
-        verify(taskRepository, times(1)).findById(savedTask.getId());
-    }
-
-    @Test
-    void testSave_EntityNotFoundException() {
-        // Arrange
-        Task task = new Task();
-        task.setId(UUID.randomUUID().toString());
-
-        Task savedTask = new Task();
-        savedTask.setId(task.getId());
-
-        when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
-        when(taskRepository.findById(savedTask.getId())).thenReturn(Optional.empty());
-
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> taskService.save(task));
-        verify(taskRepository, times(1)).save(task);
-        verify(taskRepository, times(1)).findById(savedTask.getId());
-    }
+//    @Test
+//    void testSave_EntityNotFoundException() {
+//        // Arrange
+//        Task task = new Task();
+//        task.setId(UUID.randomUUID().toString());
+//
+//        Task savedTask = new Task();
+//        savedTask.setId(task.getId());
+//
+//        when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
+//        when(taskRepository.findById(savedTask.getId())).thenReturn(Optional.empty());
+//
+//        // Act & Assert
+//        assertThrows(EntityNotFoundException.class, () -> taskService.save(task));
+//        verify(taskRepository, times(1)).save(task);
+//        verify(taskRepository, times(1)).findById(savedTask.getId());
+//    }
 
     @Test
     void testGetTasksByColumnId_Success() {

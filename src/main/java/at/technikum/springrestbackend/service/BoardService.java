@@ -61,7 +61,6 @@ public class BoardService {
         } catch (Exception e) {
             throw new RuntimeException("An error occurred while deleting the board: " + e.getMessage(), e);
         }
-        System.out.println("Board deleted " + id);
     }
 
     public List<Board> findAll(){

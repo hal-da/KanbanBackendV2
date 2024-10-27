@@ -20,9 +20,7 @@ public class TaskMapper {
     private final PublicUserMapper publicUserMapper;
 
     public Task toTask(TaskDto taskDto, UserEntity user) {
-
         Column column = columnService.getColumnById(taskDto.getColumnId());
-
         if(column == null) {
             throw new IllegalArgumentException("Column with id " + taskDto.getColumnId() + " not found");
         }
